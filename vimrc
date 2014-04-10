@@ -206,11 +206,6 @@ if !InLocation("home_osx")
     noremap <C-S> :w<CR>
 endif
 
-" Color scheme
-nnoremap <F2> :LuciusLight<CR>
-nnoremap <S-F2> :LuciusDark<CR>
-nnoremap <C-F2> :LuciusDarkDim<CR>
-
 " Windows copy, cut, and paste
 if has("win32") || has("win64")
     exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
@@ -267,11 +262,6 @@ command! -nargs=1 Title :set title titlestring=<args>
 " Strip extra whitespace
 command! Strip %s/\s\+$//
 
-command! ReloadConfig :source ~/vimfiles/vimrc.vim
-command! Config :e ~/vimfiles/vimrc.vim
-
-command! Notes :cd ~/notes
-
 " Change directory to current buffer
 command! CD :lcd %:p:h
 
@@ -289,8 +279,12 @@ command! WQ wq
 " ============================================================================
 
 " set the runtime path to include Vundle and initialize
-set runtimepath+=~/vimfiles/bundle/vundle/
-call vundle#rc()
+let s:vundle_path = "~/.vim/bundle/"
+if has("win32") || has("win64")
+    let s:vundle_path = "~/vimfiles/bundle/"
+endif
+execute "set runtimepath+=" . s:vundle_path . "/vundle/"
+call vundle#rc(s:vundle_path)
 
 " ----------------------------------------------------------------------------
 " Vundle:
@@ -299,15 +293,15 @@ call vundle#rc()
 Plugin 'gmarik/vundle'
 
 Plugin 'bling/vim-airline'
+Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
+Plugin 'hdima/python-syntax'
 Plugin 'jonathanfilip/vim-dbext'
 Plugin 'jonathanfilip/vim-lucius'
 Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'othree/xml.vim'
-Plugin 'elzr/vim-json'
 Plugin 'scrooloose/nerdcommenter'
-Plugin 'hdima/python-syntax'
 Plugin 'scrooloose/nerdtree'
 Plugin 'scrooloose/syntastic'
 Plugin 'tpope/vim-markdown'
@@ -327,50 +321,6 @@ let g:airline_right_sep=''
 " ----------------------------------------------------------------------------
 
 let g:ctags_bin = "ctags"
-
-
-" ----------------------------------------------------------------------------
-" Cpp Omnicomplete:
-" ----------------------------------------------------------------------------
-
-let OmniCpp_GlobalScopeSearch = 1
-let OmniCpp_NamespaceSearch = 2
-let OmniCpp_ShowPrototypeInAbbr = 1
-
-
-" ----------------------------------------------------------------------------
-" CScope:
-" ----------------------------------------------------------------------------
-
-"if has("cscope")
-"    set cscopequickfix=s-,c-,d-,i-,t-,e-
-"    if filereadable("cscope.out")
-"        set cscopetagorder=0
-"        set cscopetag
-"        set nocscopeverbose
-"        cs add cscope.out
-"        "set cscopeverbose
-"    endif
-
-"    " View the tag (g-] behavior)
-"    nmap <C-@>v :tselect <C-R>=expand("<cword>")<CR><CR>
-"    " Find this C symbol
-"    nmap <C-@>s :lcscope find s <C-R>=expand("<cword>")<CR><CR>
-"    " Find this definition
-"    nmap <C-@>g :lcscope find g <C-R>=expand("<cword>")<CR><CR>
-"    " Find functions called by this function
-"    nmap <C-@>d :lcscope find d <C-R>=expand("<cword>")<CR><CR>
-"    " Find functions calling this function
-"    nmap <C-@>c :lcscope find c <C-R>=expand("<cword>")<CR><CR>
-"    " Find this text string
-"    nmap <C-@>t :lcscope find t <C-R>=expand("<cword>")<CR><CR>
-"    " Find this egrep pattern
-"    nmap <C-@>e :lcscope find e <C-R>=expand("<cword>")<CR><CR>
-"    " Find this file
-"    nmap <C-@>f :lcscope find f <C-R>=expand("<cword>")<CR><CR>
-"    " Find files #including this file
-"    nmap <C-@>i :lcscope find i <C-R>=expand("<cword>")<CR><CR>
-"endif
 
 
 " ----------------------------------------------------------------------------
