@@ -46,19 +46,45 @@ if !has("gui_running")
     set t_Co=256
     set term=xterm-256color
 endif
-if !has("gui_running") && has("clipboard")
+if has("clipboard")
     set clipboard=unnamed
 endif
 
 syntax on
 
-set wildignore+=.svn\*,*.pyc,*.pyo,*.so,*.o,*.dll,*.lib,*.pyd
-set wildignore+=*.obj,*.h5,*.ttf,*.pdf,*.xls,*.pcl,*.gz,*.png
-set wildignore+=*.gif,*.jpg,*.ico,*.bak,*~
-set wildignore+=*.sln,*.csproj,*.resx,*.suo
-set wildignore+=*.exe,*.pdb,*.map
-set wildignore+=*.doc
-set wildignore+=tmp,tags,cscope.out
+set wildignore+=
+            \*.bak
+            \*.csproj
+            \*.dll
+            \*.doc
+            \*.exe
+            \*.gif
+            \*.gz
+            \*.h5
+            \*.ico
+            \*.jpg
+            \*.lib
+            \*.map
+            \*.o
+            \*.obj
+            \*.pcl
+            \*.pdb
+            \*.pdf
+            \*.png
+            \*.pyc
+            \*.pyd
+            \*.pyo
+            \*.resx
+            \*.sln
+            \*.so
+            \*.suo
+            \*.ttf
+            \*.xls
+            \*~
+            \.svn\*
+            \cscope.out
+            \tags
+            \tmp
 
 
 " ============================================================================
@@ -119,6 +145,7 @@ set nobackup nowritebackup noswapfile
 set autoindent
 set backspace=indent,eol,start
 set formatoptions=tcrqn
+set nrformats-=octal
 set nowrap nojoinspaces
 set showmatch
 set tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab shiftround
@@ -151,10 +178,6 @@ endif
 
 map <Leader>gq gqap
 
-" Select up to the next non-text blob
-vmap <C-j> /^[^a-zA-Z0-9]*$<CR>k
-vmap <C-k> ?^[^a-zA-Z0-9]*$<CR>j
-
 " Buffer contorls
 noremap <silent> <leader>n :bnext<CR>
 noremap <silent> <leader>p :bprev<CR>
@@ -186,12 +209,6 @@ endif
 noremap <leader>sp :split<CR>
 noremap <leader>vs :vsplit<CR>
 
-" Shortcuts for clipboard copy/pasting
-vnoremap zp "*p
-vnoremap zy "*y
-noremap zp "*p
-noremap zy "*y
-
 " Make x not yank to register
 noremap x "_x
 
@@ -203,36 +220,6 @@ if !InLocation("home_osx")
     onoremap <C-A> <C-C>gggH<C-O>G
     snoremap <C-A> <C-C>gggH<C-O>G
     xnoremap <C-A> <C-C>ggVG
-    noremap <C-S> :w<CR>
-endif
-
-" Windows copy, cut, and paste
-if has("win32") || has("win64")
-    exe 'inoremap <script> <C-V>' paste#paste_cmd['i']
-    exe 'vnoremap <script> <C-V>' paste#paste_cmd['v']
-
-    " Fix shift + insert to use the paste scripts too
-    imap <S-Insert> <C-V>
-    vmap <S-Insert> <C-V>
-
-    " Use CTRL-Q to do what CTRL-V used to do
-    noremap <C-Q> <C-V>
-
-    " CTRL-X and SHIFT-Del are Cut
-    vnoremap <C-X> "+x
-    vnoremap <S-Del> "+x
-
-    " CTRL-C and CTRL-Insert are Copy
-    vnoremap <C-C> "+y
-    vnoremap <C-Insert> "+y
-
-    " CTRL-V and SHIFT-Insert are Paste
-    map <C-V> "+gP
-    map <S-Insert> "+gP
-
-    " Command mode paste
-    cmap <C-V> <C-R>+
-    cmap <S-Insert> <C-R>+
 endif
 
 " Don't bring up help on F1
@@ -266,10 +253,10 @@ command! Strip %s/\s\+$//
 command! CD :lcd %:p:h
 
 " More lenient to save command
-command! W w
 command! Q q
 command! QA qa
 command! Qa qa
+command! W w
 command! Wq wq
 command! WQ wq
 
@@ -279,9 +266,9 @@ command! WQ wq
 " ============================================================================
 
 " set the runtime path to include Vundle and initialize
-let s:vundle_path = "~/.vim/bundle/"
+let s:vundle_path = expand("~/.vim/bundle/")
 if has("win32") || has("win64")
-    let s:vundle_path = "~/vimfiles/bundle/"
+    let s:vundle_path = expand("~/vimfiles/bundle/")
 endif
 execute "set runtimepath+=" . s:vundle_path . "/vundle/"
 call vundle#rc(s:vundle_path)
@@ -368,13 +355,13 @@ command! TagsCwd call lucius#GenerateTags(getcwd(), 0) " current cwd
 command! TagsCwdForce call lucius#GenerateTags(getcwd(), 1) " cwd, force
 command! -nargs=1 -complete=file Sqlite :call lucius#LoadSqlite(<q-args>)
 command! -nargs=1 -complete=custom,lucius#DatabaseComplete Database :call
-            \ lucius#LoadDatabase(<q-args>)
+            \lucius#LoadDatabase(<q-args>)
 command! -nargs=1 -complete=custom,lucius#DatabaseComplete Data :call
-            \ lucius#LoadDatabase(<q-args>)
+            \lucius#LoadDatabase(<q-args>)
 command! -nargs=1 -complete=custom,lucius#ProjectComplete Project :call
-            \ lucius#LoadProject(<q-args>)
+            \lucius#LoadProject(<q-args>)
 command! -nargs=1 -complete=custom,lucius#ProjectComplete Proj :call
-            \ lucius#LoadProject(<q-args>)
+            \lucius#LoadProject(<q-args>)
 
 noremap <C-f> :call lucius#ToggleSearchHighlighting()<CR>
 nnoremap <F10> :call lucius#ToggleTextWidth()<CR>
@@ -534,7 +521,7 @@ au FileType slice setlocal cindent
 " ----------------------------------------------------------------------------
 
 function! EditColors()
-    execute 'e ~/vimfiles/colors/lucius.vim'
+    execute 'e ' . expand("~/vimfiles/colors/lucius.vim")
     execute 'so $VIMRUNTIME/syntax/hitest.vim'
     execute 'wincmd L'
     execute 'help syntax'
