@@ -9,25 +9,10 @@
 set nocompatible
 
 " Set location so we can set variables accordingly
-let location = "home_osx"
-if exists("$CITADEL_ENV")
-    if has("win32") || has("win64")
-        let location="work_win"
-    else
-        let location="work_linux"
-    endif
-elseif has("win32") || has("win64")
-    let location="home_win"
+let os = "linux"
+if has("win32") || has("win64")
+    let os="win"
 endif
-
-function! InLocation(...)
-    for l in a:000
-        if g:location == l
-            return 1
-        endif
-    endfor
-    return 0
-endfunction
 
 
 " ============================================================================
@@ -112,7 +97,7 @@ set winminheight=0 winminwidth=0
 set ignorecase incsearch nohlsearch smartcase
 if has("gui_running")
     set title
-    if InLocation("home_osx")
+    if os == "osx"
         set lines=80 columns=200 fuoptions=maxvert,maxhorz
     else
         set lines=60 columns=160
@@ -170,9 +155,9 @@ vnoremap > >gv
 vnoremap < <gv
 
 vnoremap <BS> d
-if InLocation("home_osx")
+if os == "osx"
     inoremap <A-BS> <C-w>
-elseif InLocation("home_win") || InLocation("work_win")
+elseif os == "win"
     inoremap <C-BS> <C-w>
 endif
 
@@ -213,7 +198,7 @@ noremap <leader>vs :vsplit<CR>
 noremap x "_x
 
 " CTRL-A is Select all, etc
-if !InLocation("home_osx")
+if os != "osx"
     noremap <C-A> ggVG
     inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
     cnoremap <C-A> <C-C>gggH<C-O>G
@@ -549,31 +534,10 @@ function! GetOutput(cmd)
 endfunction
 command! -nargs=+ -complete=command GetOutput call GetOutput(<q-args>)
 
-
-" ----------------------------------------------------------------------------
-" UseWorkSettings:
-" ----------------------------------------------------------------------------
-
-function! UseWorkSettings()
-    "au BufNewFile,BufRead *.py set noexpandtab
-    au BufNewFile,BufRead *.py set expandtab colorcolumn=80
-    au BufNewFile,BufRead *.cpp set noexpandtab
-    au BufNewFile,BufRead *.C set noexpandtab
-    au BufNewFile,BufRead *.hpp set noexpandtab
-    au BufNewFile,BufRead *.H set noexpandtab
-    au BufNewFile,BufRead *.cs set noexpandtab
-endfunction
-command! WorkSettings :call UseWorkSettings()
-if InLocation("work_win", "work_linux")
-    WorkSettings
-endif
-
-
 " Load matchit.vim, but only if the user hasn't installed a newer version.
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim
 endif
-
 
 
 " ============================================================================
@@ -583,7 +547,4 @@ endif
 if filereadable(expand("~/.vimrc_local"))
     source ~/.vimrc_local
 endif
-
-
-
 
