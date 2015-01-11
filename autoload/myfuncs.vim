@@ -1,16 +1,25 @@
-" Vim autoload for lucius
+" My vim autoload functions
 " Author: Jonathan Filip
 
 
-" ============================================================================
-" Functions:
-" ============================================================================
+" Functions: {{{1 ============================================================
 
-" ----------------------------------------------------------------------------
-" GenerateTags:
-" ----------------------------------------------------------------------------
+" EditColors: {{{2 -----------------------------------------------------------
 
-function! lucius#GenerateTags(dir, force)
+function! myfuncs#EditColors()
+    execute "e " . expand("~/vimfiles/bundle/vim-lucius/colors/lucius.vim")
+    execute "so " . expand("$VIMRUNTIME/syntax/hitest.vim")
+    execute "wincmd L"
+    execute "help syntax"
+    execute "wincmd L"
+    execute "wincmd ="
+    execute "244"
+endfunction
+
+
+" GenerateTags: {{{2 ---------------------------------------------------------
+
+function! myfuncs#GenerateTags(dir, force)
     " dir - directory to start in
     " force - set to 1 if you want to force tags to be in 'dir'
     let running_windows = has("win16") || has("win32") ||
@@ -118,43 +127,37 @@ function! lucius#GenerateTags(dir, force)
 endfunction
 
 
-" ----------------------------------------------------------------------------
-" LoadProject:
-" ----------------------------------------------------------------------------
+" LoadProject: {{{2 ----------------------------------------------------------
 
-function! lucius#LoadProject(...)
+function! myfuncs#LoadProject(...)
     exec "silent cd " . g:projects[a:1]
     exec "silent set title titlestring=" . a:1
     echo a:1 . " project loaded."
 endfunction
-function! lucius#ProjectComplete(A,L,P)
+function! myfuncs#ProjectComplete(A,L,P)
     return join(keys(g:projects), "\n")
 endfunction
 
 
-" ----------------------------------------------------------------------------
-" LoadDatabase:
-" ----------------------------------------------------------------------------
+" LoadDatabase: {{{2 ---------------------------------------------------------
 
-function! lucius#LoadDatabase(...)
-    call lucius#ScratchBuffer("[" . a:1 . "]")
+function! myfuncs#LoadDatabase(...)
+    call myfuncs#ScratchBuffer("[" . a:1 . "]")
     exec "set title titlestring=" . a:1
     exec "DBSetOption " . g:databases[a:1]
     setlocal filetype=sql
     let b:sql_type_override = 'sqlanywhere'
 endfunction
-function! lucius#DatabaseComplete(A,L,P)
+function! myfuncs#DatabaseComplete(A,L,P)
     return join(keys(g:databases), "\n")
 endfunction
 
 
-" ----------------------------------------------------------------------------
-" LoadSqlite:
-" ----------------------------------------------------------------------------
+" LoadSqlite: {{{2 -----------------------------------------------------------
 
-function! lucius#LoadSqlite(path)
+function! myfuncs#LoadSqlite(path)
     let path = substitute(a:path, ':', '\\:', "g")
-    call lucius#ScratchBuffer("[SQLITE]")
+    call myfuncs#ScratchBuffer("[SQLITE]")
     exec "set title titlestring=SQLITE"
     let cmdStr = 'DBSetOption type=SQLITE:dbname=' . path .
                 \':user=jfilip:passwd=jfilip'
@@ -163,23 +166,18 @@ function! lucius#LoadSqlite(path)
 endfunction
 
 
-" ----------------------------------------------------------------------------
-" ScratchBuffer:
-" ----------------------------------------------------------------------------
+" ScratchBuffer: {{{2 --------------------------------------------------------
 
-function! lucius#ScratchBuffer(buf_name)
-    "exec "silent! e "
+function! myfuncs#ScratchBuffer(buf_name)
     exec "silent! e " . a:buf_name
     setlocal buftype=nofile bufhidden=hide noswapfile nowrap
 endfunction
 command! -nargs=1 CreateScratchBuffer call ScratchBuffer(<args>)
 
 
-" ----------------------------------------------------------------------------
-" ToggleSearchHighlighting:
-" ----------------------------------------------------------------------------
+" ToggleSearchHighlighting: {{{2 ---------------------------------------------
 
-function! lucius#ToggleSearchHighlighting()
+function! myfuncs#ToggleSearchHighlighting()
     if &hls == 0
         set hls
         echo "Search highlighting on."
@@ -190,11 +188,9 @@ function! lucius#ToggleSearchHighlighting()
 endfunction
 
 
-" ----------------------------------------------------------------------------
-" ToggleTextWidth:
-" ----------------------------------------------------------------------------
+" ToggleTextWidth: {{{2 ------------------------------------------------------
 
-function! lucius#ToggleTextWidth()
+function! myfuncs#ToggleTextWidth()
     if &tw == 0
         set tw=79
         echo "Text width set to 79."
@@ -205,11 +201,9 @@ function! lucius#ToggleTextWidth()
 endfunction
 
 
-" ----------------------------------------------------------------------------
-" ToggleWrap:
-" ----------------------------------------------------------------------------
+" ToggleWrap: {{{2 -----------------------------------------------------------
 
-function! lucius#ToggleWrap()
+function! myfuncs#ToggleWrap()
     if &wrap == 0 && &linebreak == 0
         set wrap linebreak
         echo "Wrapping on."
@@ -220,11 +214,9 @@ function! lucius#ToggleWrap()
 endfunction
 
 
-" ----------------------------------------------------------------------------
-" ToggleSpellCheck:
-" ----------------------------------------------------------------------------
+" ToggleSpellCheck: {{{2 -----------------------------------------------------
 
-function! lucius#ToggleSpellCheck()
+function! myfuncs#ToggleSpellCheck()
     if &spell == 0
         set spell
         echo "Spell check on."
@@ -235,11 +227,9 @@ function! lucius#ToggleSpellCheck()
 endfunction
 
 
-" ----------------------------------------------------------------------------
-" ToggleScrollbars:
-" ----------------------------------------------------------------------------
+" ToggleScrollbars: {{{2 -----------------------------------------------------
 
-function! lucius#ToggleScrollbars()
+function! myfuncs#ToggleScrollbars()
     if &guioptions =~ "rb"
         set guioptions-=rb
         echo "Scrollbars off."
@@ -250,9 +240,7 @@ function! lucius#ToggleScrollbars()
 endfunction
 
 
-" ============================================================================
-" Python:
-" ============================================================================
+" Python: {{{1 ===============================================================
 
 if has("python")
 python << EOL
@@ -282,7 +270,7 @@ for entry in sys.path:
         vim.command(r'set path+=%s' % (entry.replace(' ', r'\ ')))
 EOL
 
-function! lucius#EvaluateCurrentRange()
+function! myfuncs#EvaluateCurrentRange()
     execute 'py EvaluateCurrentRange()'
 endfunction
 
