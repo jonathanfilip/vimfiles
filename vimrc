@@ -2,102 +2,90 @@
 " Author: Jonathan Filip
 
 
-" ============================================================================
-" Setup:
-" ============================================================================
+" Setup: {{{1 ================================================================
 
 set nocompatible
+set encoding=utf-8
 
 " Set location so we can set variables accordingly
-let os = "linux"
+let g:os = "linux"
 if has("win32") || has("win64")
-    let os="win"
+    let g:os="win"
 endif
 
 
-" ============================================================================
-" General Options:
-" ============================================================================
+" Settings: {{{1 =============================================================
 
-set shortmess=flmnrxIstToO
-set showmode
-set history=1000
-set nofoldenable foldmethod=manual
 set browsedir=buffer
-set shellslash
 set hidden
-set tags=./tags;/.
+set history=1000
+set mouse=a 
+set shortmess=filmnrxoOtTI
+
+set backspace=indent,eol,start
+set confirm
+set foldmethod=manual
+set formatoptions=tcrqn
+set nojoinspaces
+set nowrap 
+set nrformats-=octal
+set scrollopt=jump,ver,hor
+set sidescroll=10
+set splitbelow
+set splitright
+set virtualedit=block
+set whichwrap+=<,>,h,l
+
+" Terminal
 if !has("gui_running")
     set t_Co=256
     set term=xterm-256color
+    set ttymouse=xterm2
 endif
+
+" Use system clipboard
 if has("clipboard")
     set clipboard=unnamed
+    " set clipboard=
+endif
+
+if g:os != "win"
+    set shellslash
 endif
 
 syntax on
 
-set wildignore+=
-            \*.bak,
-            \*.csproj,
-            \*.dll,
-            \*.doc,
-            \*.exe,
-            \*.gif,
-            \*.gz,
-            \*.h5,
-            \*.ico,
-            \*.jpg,
-            \*.lib,
-            \*.map,
-            \*.o,
-            \*.obj,
-            \*.pcl,
-            \*.pdb,
-            \*.pdf,
-            \*.png,
-            \*.pyc,
-            \*.pyd,
-            \*.pyo,
-            \*.resx,
-            \*.sln,
-            \*.so,
-            \*.suo,
-            \*.ttf,
-            \*.xls,
-            \*~,
-            \.svn\*,
-            \cscope.out,
-            \tags,
-            \tmp,
+set tags=./tags;/.
+
+if version >= 703
+    set cryptmethod=blowfish
+endif
 
 
-" ============================================================================
-" UI Options:
-" ============================================================================
+" UI Settings: {{{2 ----------------------------------------------------------
 
 set cmdheight=1
-set completeopt=longest,menu complete=.,w,b,u
-set confirm
+set cursorline
+set fillchars=
 set guioptions=egc
 set laststatus=2
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
-set fillchars=
-set mouse=a mousehide ttymouse=xterm2
 set noequalalways
-set noerrorbells novisualbell
-set ruler showcmd
-set scrollopt=jump,ver,hor
+set noerrorbells 
+set novisualbell
+set ruler 
+set showcmd
+set showmatch
+set showmode
 set showtabline=1
-set sidescroll=10
-set splitbelow splitright
 set statusline=%<%f\ %h%m%r%y[%{&ff}]%=%-14.(%l,%c%V%)\ %P
-set wildmenu wildmode=list:longest,full
-set winminheight=0 winminwidth=0
-set ignorecase incsearch nohlsearch smartcase
+set synmaxcol=1000
+set winminheight=0 
+set winminwidth=0
+
 if has("gui_running")
     set title
-    if os == "osx"
+    if g:os == "osx"
         set lines=80 columns=200 fuoptions=maxvert,maxhorz
     else
         set lines=60 columns=160
@@ -112,70 +100,93 @@ else
 endif
 
 
-" ============================================================================
-" File Options:
-" ============================================================================
+" Search Settings: {{{2 ------------------------------------------------------
+
+set ignorecase 
+set incsearch 
+set nohlsearch 
+set smartcase
+
+
+" Indentation Settings: {{{2 -------------------------------------------------
+
+set autoindent
+set tabstop=4 
+set softtabstop=4 
+set shiftwidth=4 
+set expandtab 
+set smarttab 
+set shiftround
+
+
+" Completion Settings: {{{2 --------------------------------------------------
+
+set complete=.,w,b,u
+set completeopt=longest,menu
+set wildmenu 
+set wildmode=list:longest,full
+
+
+" File Settings: {{{2 --------------------------------------------------------
 
 filetype plugin indent on
 set autoread
-set encoding=utf-8
 set fileformats=unix,dos
-set nobackup nowritebackup noswapfile
+set nobackup 
+set nowritebackup 
+set noswapfile
 
 
-" ============================================================================
-" Editting Options:
-" ============================================================================
+" Wild Ignore Settings: {{{2 -------------------------------------------------
 
-set autoindent
-set backspace=indent,eol,start
-set formatoptions=tcrqn
-set nrformats-=octal
-set nowrap nojoinspaces
-set showmatch
-set tabstop=4 softtabstop=4 shiftwidth=4 expandtab smarttab shiftround
-set virtualedit=block
-set whichwrap+=<,>,h,l
-if version >= 703
-    set cryptmethod=blowfish
-endif
+set wildignore+=*.pyc,*.pyd,*.pyo " python files
+set wildignore+=*.bmp,*.gif,*.ico,*.png,*.jpg,*.jpeg " images
+set wildignore+=*.csproj,*.pdb,*.resx,*.sln,*.suo " visual studio
+set wildignore+=*.doc,*.docx,*.pdf,*.xls,*.xlsx " documents
+set wildignore+=*.dll,*.exe,*.lib,*.map,*.o,*.obj,*.so " binaries
+set wildignore+=*.h5,*.gz " compressed files
+set wildignore+=*.bak,*~,tmp " misc files
+set wildignore+=.svn\*,.git\* " scm
+set wildignore+=cscope.out,tags " vim
 
 
-" ============================================================================
-" Key Mappings:
-" ============================================================================
+" Mappings: {{{1 =============================================================
 
-let mapleader = ";"
-let maplocalleader = ";"
+let g:mapleader = "\<Space>"
+let g:maplocalleader = "\<Space>"
+"let g:mapleader = ";"
+"let g:maplocalleader = ";"
 
 " Indenting in visual mode
-vnoremap <tab> >gv
-vnoremap <s-tab> <gv
-vnoremap > >gv
-vnoremap < <gv
+xnoremap <tab> >gv
+xnoremap <s-tab> <gv
+xnoremap > >gv
+xnoremap < <gv
 
-vnoremap <BS> d
-if os == "osx"
+" Backspace
+xnoremap <BS> d
+if g:os == "osx"
     inoremap <A-BS> <C-w>
-elseif os == "win"
+elseif g:os == "win"
     inoremap <C-BS> <C-w>
 endif
 
-map <Leader>gq gqap
+" Format
+noremap <Leader>gq gqap
 
 " Buffer contorls
-noremap <silent> <leader>n :bnext<CR>
-noremap <silent> <leader>p :bprev<CR>
+nnoremap <silent> <leader>n :bnext<CR>
+nnoremap <silent> <leader>N :bprev<CR>
 
 " Diff commands
-noremap <silent> <leader>dt :diffthis<CR>
-noremap <silent> <leader>do :diffoff!<CR>
+nnoremap <silent> <leader>dt :diffthis<CR>
+nnoremap <silent> <leader>do :diffoff!<CR>
 
 " Window control
-nmap <C-j> <C-w>j
-nmap <C-k> <C-w>k
-nmap <C-h> <C-w>h
-nmap <C-l> <C-w>l
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-h> <C-w>h
+nnoremap <C-l> <C-w>l
 
 " Resize windows
 if has("gui_running")
@@ -191,14 +202,22 @@ else
 endif
 
 " Splitting
-noremap <leader>sp :split<CR>
-noremap <leader>vs :vsplit<CR>
+nnoremap <leader>sp :split<CR>
+nnoremap <leader>vs :vsplit<CR>
 
 " Make x not yank to register
 noremap x "_x
 
+" Global copy and paste
+xnoremap <leader>y "*y
+xnoremap <leader>d "*d
+xnoremap <leader>p "*p
+nnoremap <leader>p "*p
+xnoremap <leader>P "*P
+nnoremap <leader>P "*P
+
 " CTRL-A is Select all, etc
-if os != "osx"
+if g:os != "osx"
     noremap <C-A> ggVG
     inoremap <C-A> <C-O>gg<C-O>gH<C-O>G
     cnoremap <C-A> <C-C>gggH<C-O>G
@@ -208,27 +227,26 @@ if os != "osx"
 endif
 
 " Don't bring up help on F1
-map <F1> <ESC>
-imap <F1> <ESC>
+noremap <F1> <ESC>
+inoremap <F1> <ESC>
 
 " Disable middle mouse button pasting
-map <MiddleMouse> <Nop>
-imap <MiddleMouse> <Nop>
-map <2-MiddleMouse> <Nop>
-imap <2-MiddleMouse> <Nop>
-map <3-MiddleMouse> <Nop>
-imap <3-MiddleMouse> <Nop>
-map <4-MiddleMouse> <Nop>
-imap <4-MiddleMouse> <Nop>
+noremap <MiddleMouse> <Nop>
+inoremap <MiddleMouse> <Nop>
+noremap <2-MiddleMouse> <Nop>
+inoremap <2-MiddleMouse> <Nop>
+noremap <3-MiddleMouse> <Nop>
+inoremap <3-MiddleMouse> <Nop>
+noremap <4-MiddleMouse> <Nop>
+inoremap <4-MiddleMouse> <Nop>
 
 " Get rid of Ex mode
 nnoremap <S-Q> <Q>
 
 
-" ============================================================================
-" Commands:
-" ============================================================================
+" Commands: {{{1 =============================================================
 
+" Set window title
 command! -nargs=1 Title :set title titlestring=<args>
 
 " Strip extra whitespace
@@ -237,7 +255,7 @@ command! Strip %s/\s\+$//
 " Change directory to current buffer
 command! CD :lcd %:p:h
 
-" More lenient to save command
+" Save command typos
 command! Q q
 command! QA qa
 command! Qa qa
@@ -246,10 +264,11 @@ command! Wq wq
 command! WQ wq
 
 
-" ============================================================================
-" Plugin Options:
-" ============================================================================
+" Plugins: {{{1 ==============================================================
 
+" Vundle: {{{2 ---------------------------------------------------------------
+
+filetype off
 " set the runtime path to include Vundle and initialize
 let s:vundle_path = expand("~/.vim/bundle/")
 if has("win32") || has("win64")
@@ -258,46 +277,44 @@ endif
 execute "set runtimepath+=" . s:vundle_path . "/vundle/"
 call vundle#rc(s:vundle_path)
 
-" ----------------------------------------------------------------------------
-" Vundle:
-" ----------------------------------------------------------------------------
-
 Plugin 'gmarik/vundle'
 
 Plugin 'bling/vim-airline'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
 Plugin 'hdima/python-syntax'
+Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'jonathanfilip/vim-dbext'
 Plugin 'jonathanfilip/vim-lucius'
-Plugin 'kien/ctrlp.vim'
+"Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 Plugin 'othree/xml.vim'
-Plugin 'scrooloose/nerdcommenter'
-Plugin 'scrooloose/nerdtree'
-Plugin 'scrooloose/syntastic'
+"Plugin 'scrooloose/nerdcommenter'
+"Plugin 'scrooloose/nerdtree'
+"Plugin 'scrooloose/syntastic'
+Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-markdown'
+"Plugin 'tpope/vim-surround'
+Plugin 'tpope/vim-vinegar'
 Plugin 'vim-scripts/DirDiff.vim'
 Plugin 'vim-scripts/vcscommand.vim'
 
+filetype plugin indent on
 
-" ----------------------------------------------------------------------------
-" Airline:
-" ----------------------------------------------------------------------------
+
+" Airline: {{{2 --------------------------------------------------------------
 
 let g:airline_left_sep=''
 let g:airline_right_sep=''
 
-" ----------------------------------------------------------------------------
-" Ctags:
-" ----------------------------------------------------------------------------
+
+" Ctags: {{{2 ----------------------------------------------------------------
 
 let g:ctags_bin = "ctags"
 
 
-" ----------------------------------------------------------------------------
-" CtrlP:
-" ----------------------------------------------------------------------------
+" CtrlP: {{{2 ----------------------------------------------------------------
 
 let g:ctrlp_working_path_mode = 0
 let g:ctrlp_show_hidden = 0
@@ -312,15 +329,19 @@ let g:ctrlp_custom_ignore = {
             \ 'file': '',
             \ }
 
-noremap <silent> <leader>ff :CtrlP<CR>
-noremap <silent> <leader>fb :CtrlPBuffer<CR>
-noremap <silent> <leader>fr :CtrlPMRU<CR>
-noremap <silent> <leader>ft :CtrlPBufTag<CR>
+nnoremap <silent> <leader>ff :CtrlP<CR>
+nnoremap <silent> <leader>fb :CtrlPBuffer<CR>
+nnoremap <silent> <leader>fr :CtrlPMRU<CR>
+nnoremap <silent> <leader>ft :CtrlPBufTag<CR>
+
+nnoremap <silent> <leader>e :CtrlP<CR>
+nnoremap <silent> <leader>b :CtrlPBuffer<CR>
+"nnoremap <silent> <leader>o :CtrlP<CR>
+"nnoremap <silent> <leader>r :CtrlPMRU<CR>
+"nnoremap <silent> <leader>t :CtrlPBufTag<CR>
 
 
-" ----------------------------------------------------------------------------
-" Dbext:
-" ----------------------------------------------------------------------------
+" Dbext: {{{2 ----------------------------------------------------------------
 
 let g:dbext_default_prompt_for_parameters = 0
 let g:dbext_default_display_cmd_line = 1
@@ -328,49 +349,19 @@ let g:dbext_default_SQLITE_bin = "sqlite3"
 let g:dbext_default_history_file = "$HOME/.dbext_sql_history.txt"
 
 
-" ----------------------------------------------------------------------------
-" Lucius:
-" ----------------------------------------------------------------------------
+" Myfuncs: {{{2 --------------------------------------------------------------
 
 let g:projects = {}
 let g:databases = {}
-command! Tags call lucius#GenerateTags(fnamemodify(bufname('%'), \':p:h'), 0) " current file dir
-command! TagsForce call lucius#GenerateTags(fnamemodify(bufname('%'), \':p:h'), 1) " current file dir, force
-command! TagsCwd call lucius#GenerateTags(getcwd(), 0) " current cwd
-command! TagsCwdForce call lucius#GenerateTags(getcwd(), 1) " cwd, force
-command! -nargs=1 -complete=file Sqlite :call lucius#LoadSqlite(<q-args>)
-command! -nargs=1 -complete=custom,lucius#DatabaseComplete Database :call
-            \lucius#LoadDatabase(<q-args>)
-command! -nargs=1 -complete=custom,lucius#DatabaseComplete Data :call
-            \lucius#LoadDatabase(<q-args>)
-command! -nargs=1 -complete=custom,lucius#ProjectComplete Project :call
-            \lucius#LoadProject(<q-args>)
-command! -nargs=1 -complete=custom,lucius#ProjectComplete Proj :call
-            \lucius#LoadProject(<q-args>)
-
-noremap <C-f> :call lucius#ToggleSearchHighlighting()<CR>
-nnoremap <F10> :call lucius#ToggleTextWidth()<CR>
-nnoremap <S-F10> :call lucius#ToggleWrap()<CR>
-nnoremap <F11> :call lucius#ToggleSpellCheck()<CR>
-nnoremap <F12> :call lucius#ToggleScrollbars()<CR>
-
-if has("python")
-    command! -range EvalPythonRange call lucius#EvaluateCurrentRange()
-    map <silent> <F5> :EvalPythonRange<CR>
-endif
 
 
-" ----------------------------------------------------------------------------
-" NERD Commenter:
-" ----------------------------------------------------------------------------
+" NERD Commenter: {{{2 -------------------------------------------------------
 
-let NERDShutUp = 1
-let NERDRemoveExtraSpaces=0
+let g:NERDShutUp = 1
+let g:NERDRemoveExtraSpaces=0
 
 
-" ----------------------------------------------------------------------------
-" NERD Tree:
-" ----------------------------------------------------------------------------
+" NERD Tree: {{{2 ------------------------------------------------------------
 
 let g:NERDTreeChDirMode = 0
 let g:NERDChristmasTree = 1
@@ -381,26 +372,24 @@ let g:NERDTreeShowHidden = 0
 let g:NERDTreeWinPos = 'left'
 let g:NERDTreeWinSize = 32
 
-map <F3> :NERDTreeToggle<CR>
-map <C-F3> :NERDTree<CR>
-map <S-F3> :NERDTreeClose<CR>
+nnoremap <F3> :NERDTreeToggle<CR>
+nnoremap <C-F3> :NERDTree<CR>
+nnoremap <S-F3> :NERDTreeClose<CR>
 
 
-" ----------------------------------------------------------------------------
-" Python:
-" ----------------------------------------------------------------------------
+" Python: {{{2 ---------------------------------------------------------------
 
-let python_highlight_all = 1
-au BufEnter *.py :syntax sync fromstart " helps with ''' comments
-
+let g:python_highlight_all = 1
 let g:pyindent_open_paren = "&sw"
 let g:pyindent_nested_paren = "&sw"
 let g:pyindent_continue = "&sw"
 
+augroup python
+    autocmd BufEnter *.py :syntax sync fromstart " helps with ''' comments
+augroup end
 
-" ----------------------------------------------------------------------------
-" SQLUtilities:
-" ----------------------------------------------------------------------------
+
+" SQLUtilities: {{{2 ---------------------------------------------------------
 
 let g:sql_type_default = "sqlanywhere"
 let g:sqlutil_align_where = 0
@@ -409,19 +398,19 @@ let g:sqlutil_align_first_word = 1
 let g:sqlutil_keyword_case = '\L'
 
 
-" ----------------------------------------------------------------------------
-" SuperTab:
-" ----------------------------------------------------------------------------
+" SuperTab: {{{2 -------------------------------------------------------------
 
-let SuperTabDefaultCompletionType = "context"
-let SuperTabContextDefaultCompletionType = "<c-n>"
-let SuperTabContextTextOmniPrecedence = ["&completefunc"]
-au BufEnter *.md,*.txt,*.wiki :let b:SuperTabNoCompleteAfter = g:SuperTabNoCompleteAfter + ['\.', '\*', '-', ')']
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
+let g:SuperTabContextTextOmniPrecedence = ["&completefunc"]
+
+augroup super_tab
+    autocmd BufEnter *.md,*.txt,*.wiki :let b:SuperTabNoCompleteAfter = 
+                \ g:SuperTabNoCompleteAfter + ['\.', '\*', '-', ')']
+augroup end
 
 
-" ----------------------------------------------------------------------------
-" Syntastic:
-" ----------------------------------------------------------------------------
+" Syntastic: {{{2 ------------------------------------------------------------
 
 let g:syntastic_check_on_open = 0
 let g:syntastic_echo_current_error = 1
@@ -435,37 +424,45 @@ let g:syntastic_mode_map = {
             \ "active_filetypes": [],
             \ "passive_filetypes": [] }
 let g:syntastic_python_checkers = ["pyflakes"]
-map <Leader>sc :SyntasticCheck<CR>
-map <Leader>sr :SyntasticReset<CR>
+
+nnoremap <Leader>sc :SyntasticCheck<CR>
+nnoremap <Leader>sr :SyntasticReset<CR>
 
 
-" ----------------------------------------------------------------------------
-" Tagbar:
-" ----------------------------------------------------------------------------
+" Tagbar: {{{2 ---------------------------------------------------------------
 
-let g:tagbar_compact = 1
+let g:tagbar_compact = 0
+let g:tagbar_left = 1
 let g:tagbar_iconchars = ['+', '-']
 let g:tagbar_ctags_bin = g:ctags_bin
-map <F4> :TagbarToggle<CR>
+let g:tagbar_type_python = {
+    \ 'kinds' : [
+        \ 'c:classes',
+        \ 'f:functions',
+        \ 'm:class members',
+        \ 'v:variables:1',
+        \ 'i:imports:1'
+    \ ]
+\ }
 
-map <leader>t :echo tagbar#currenttag('%s','','fs')<CR>
-"set statusline=%<%f\ %h%m%r%y[%{&ff}]\ \ %{tagbar#currenttag('%s','','f')}%=%-14.(%l,%c%V%)\ %P
+nnoremap <F4> :TagbarToggle<CR>
+noremap <leader>tt :echo tagbar#currenttag('%s','','fs')<CR>
+nnoremap <Leader>tb :TagbarToggle<CR>
 
 
-" ----------------------------------------------------------------------------
-" VCS:
-" ----------------------------------------------------------------------------
+" VCS: {{{2 ------------------------------------------------------------------
 
-let VCSCommandDeleteOnHide = 1
+let g:VCSCommandDeleteOnHide = 1
+
+nnoremap <Leader>vd :VCSVimDiff<CR>
+
 augroup VCSCommand
-    au User VCSBufferCreated set bufhidden=wipe
-augroup END
-map <Leader>vd :VCSVimDiff<CR>
+    autocmd User VCSBufferCreated set bufhidden=wipe
+augroup end
 
 
-" ============================================================================
-" Colorscheme:
-" ============================================================================
+
+" Colorscheme: {{{1 ==========================================================
 
 colorscheme lucius
 if has("gui_running")
@@ -476,63 +473,28 @@ else
 endif
 
 
-" ============================================================================
-" Autocommands:
-" ============================================================================
+" Autocommands: {{{1 =========================================================
+
+" Only show cursor line in current buffer in normal mode
+augroup cursor_line
+    autocmd!
+    autocmd WinLeave,InsertEnter * set nocursorline
+    autocmd WinEnter,InsertLeave * set cursorline
+augroup end
 
 " Close the preview window automatically
-autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+augroup preview_window
+    autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
+    autocmd InsertLeave * if pumvisible() == 0|pclose|endif
+augroup end
 
 " Set xaml to be like xml
-au BufNewFile,BufRead *.xaml setfiletype xml
-
-" Format for xml
-au FileType xml setlocal equalprg=xmllint\ --format\ --recover\ -\ 2>/dev/null
-
-" Markdown
-au FileType markdown setlocal formatoptions-=l textwidth=79
-
-" ICE
-au FileType slice setlocal cindent
+augroup xaml
+    autocmd BufNewFile,BufRead *.xaml setfiletype xml
+augroup end
 
 
-" ============================================================================
-" Functions:
-" ============================================================================
-
-" ----------------------------------------------------------------------------
-" EditColors:
-" ----------------------------------------------------------------------------
-
-function! EditColors()
-    execute 'e ' . expand("~/vimfiles/colors/lucius.vim")
-    execute 'so $VIMRUNTIME/syntax/hitest.vim'
-    execute 'wincmd L'
-    execute 'help syntax'
-    execute 'wincmd ='
-    execute '10wincmd +'
-    execute '219'
-    normal! zt
-    execute 'wincmd h'
-    execute 'set title titlestring=Colors'
-endfunction
-command! Colors call EditColors()
-
-
-" ----------------------------------------------------------------------------
-" GetOutput:
-" ----------------------------------------------------------------------------
-
-function! GetOutput(cmd)
-    redir => message
-    silent execute a:cmd
-    redir END
-    enew
-    silent put=message
-    set nomodified
-endfunction
-command! -nargs=+ -complete=command GetOutput call GetOutput(<q-args>)
+" Miscellaneous: {{{1 ========================================================
 
 " Load matchit.vim, but only if the user hasn't installed a newer version.
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
@@ -540,11 +502,11 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
 endif
 
 
-" ============================================================================
-" Local:
-" ============================================================================
+" Local Settings: {{{1 =======================================================
 
 if filereadable(expand("~/.vimrc_local"))
     source ~/.vimrc_local
 endif
+
+" vim: foldenable foldmethod=marker
 
