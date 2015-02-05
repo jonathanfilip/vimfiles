@@ -298,7 +298,8 @@ Plugin 'tpope/vim-markdown'
 "Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
 Plugin 'will133/vim-dirdiff'
-Plugin 'vim-scripts/vcscommand.vim'
+" Plugin 'vim-scripts/vcscommand.vim'
+Plugin 'git://repo.or.cz/vcscommand.git'
 
 filetype plugin indent on
 
