@@ -48,6 +48,7 @@ if has("clipboard")
     set clipboard=unnamed
     " set clipboard=
 endif
+set clipboard=unnamed
 
 if g:os != "win"
     set shellslash
@@ -266,8 +267,6 @@ command! WQ wq
 
 " Plugins: {{{1 ==============================================================
 
-" Vundle: {{{2 ---------------------------------------------------------------
-
 filetype off
 " set the runtime path to include Vundle and initialize
 let s:vundle_path = expand("~/.vim/bundle/")
@@ -289,6 +288,7 @@ Plugin 'jonathanfilip/vim-dbext'
 Plugin 'jonathanfilip/vim-lucius'
 "Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
+Plugin 'terryma/vim-multiple-cursors'
 Plugin 'othree/xml.vim'
 "Plugin 'scrooloose/nerdcommenter'
 "Plugin 'scrooloose/nerdtree'
@@ -297,7 +297,7 @@ Plugin 'tomtom/tcomment_vim'
 Plugin 'tpope/vim-markdown'
 "Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
-Plugin 'vim-scripts/DirDiff.vim'
+Plugin 'will133/vim-dirdiff'
 Plugin 'vim-scripts/vcscommand.vim'
 
 filetype plugin indent on
