@@ -299,7 +299,7 @@ Plugin 'tpope/vim-markdown'
 Plugin 'tpope/vim-vinegar'
 Plugin 'will133/vim-dirdiff'
 " Plugin 'vim-scripts/vcscommand.vim'
-Plugin 'git://repo.or.cz/vcscommand.git'
+Plugin 'jonathanfilip/vim-vcscommand'
 
 filetype plugin indent on
 
