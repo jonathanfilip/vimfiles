@@ -4,7 +4,6 @@
 
 " Setup: {{{1 ================================================================
 
-set nocompatible
 set encoding=utf-8
 
 " Set location so we can set variables accordingly
@@ -386,6 +385,7 @@ let g:pyindent_nested_paren = "&sw"
 let g:pyindent_continue = "&sw"
 
 augroup python
+    autocmd!
     autocmd BufEnter *.py :syntax sync fromstart " helps with ''' comments
 augroup end
 
@@ -406,6 +406,7 @@ let g:SuperTabContextDefaultCompletionType = "<c-n>"
 let g:SuperTabContextTextOmniPrecedence = ["&completefunc"]
 
 augroup super_tab
+    autocmd!
     autocmd BufEnter *.md,*.txt,*.wiki :let b:SuperTabNoCompleteAfter = 
                 \ g:SuperTabNoCompleteAfter + ['\.', '\*', '-', ')']
 augroup end
@@ -458,6 +459,7 @@ let g:VCSCommandDeleteOnHide = 1
 nnoremap <Leader>vd :VCSVimDiff<CR>
 
 augroup VCSCommand
+    autocmd!
     autocmd User VCSBufferCreated set bufhidden=wipe
 augroup end
 
@@ -485,12 +487,14 @@ augroup end
 
 " Close the preview window automatically
 augroup preview_window
+    autocmd!
     autocmd CursorMovedI * if pumvisible() == 0|pclose|endif
     autocmd InsertLeave * if pumvisible() == 0|pclose|endif
 augroup end
 
 " Set xaml to be like xml
 augroup xaml
+    autocmd!
     autocmd BufNewFile,BufRead *.xaml setfiletype xml
 augroup end
 
