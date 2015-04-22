@@ -293,12 +293,14 @@ Plugin 'othree/xml.vim'
 "Plugin 'scrooloose/nerdtree'
 "Plugin 'scrooloose/syntastic'
 Plugin 'tomtom/tcomment_vim'
-Plugin 'tpope/vim-markdown'
+" Plugin 'tpope/vim-markdown'
 "Plugin 'tpope/vim-surround'
 Plugin 'tpope/vim-vinegar'
 Plugin 'will133/vim-dirdiff'
 " Plugin 'vim-scripts/vcscommand.vim'
 Plugin 'jonathanfilip/vim-vcscommand'
+Plugin 'vim-pandoc/vim-pandoc'
+Plugin 'vim-pandoc/vim-pandoc-syntax'
 
 filetype plugin indent on
 
