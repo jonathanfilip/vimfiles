@@ -379,6 +379,43 @@ nnoremap <C-F3> :NERDTree<CR>
 nnoremap <S-F3> :NERDTreeClose<CR>
 
 
+" Pandoc: {{{2 ---------------------------------------------------------------
+
+let g:pandoc#modules#enabled = [
+            \"bibliographies",
+            \"completion",
+            \"command",
+            \"formatting",
+            \"menu",
+            \"metadata",
+            \"keyboard" ,
+            \"toc",
+            \"chdir",
+            \"spell",
+            \"hypertext"]
+            " \"folding",
+
+let g:pandoc#formatting#mode = "h"
+let g:pandoc#formatting#textwidth = "79"
+
+let g:pandoc#keyboard#enabled_submodules = [
+            \"lists",
+            \"references",
+            \"styles",
+            \"sections",
+            \"links"]
+
+let g:pandoc#spell#enabled = 0
+
+let g:pandoc#syntax#codeblocks#embeds#langs = [
+            \"python",
+            \"cpp",
+            \"c",
+            \"cs",
+            \"sql",
+            \]
+
+
 " Python: {{{2 ---------------------------------------------------------------
 
 let g:python_highlight_all = 1
@@ -470,12 +507,7 @@ augroup end
 " Colorscheme: {{{1 ==========================================================
 
 colorscheme lucius
-if has("gui_running")
-    LuciusLight
-else
-    LuciusLight
-    "LuciusDark
-endif
+LuciusLight
 
 
 " Autocommands: {{{1 =========================================================
