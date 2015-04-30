@@ -18,7 +18,7 @@ endif
 set browsedir=buffer
 set hidden
 set history=1000
-set mouse=a 
+set mouse=a
 set shortmess=filmnrxoOtTI
 
 set backspace=indent,eol,start
@@ -26,7 +26,7 @@ set confirm
 set foldmethod=manual
 set formatoptions=tcrqn
 set nojoinspaces
-set nowrap 
+set nowrap
 set nrformats-=octal
 set scrollopt=jump,ver,hor
 set sidescroll=10
@@ -45,9 +45,9 @@ endif
 " Use system clipboard
 if has("clipboard")
     set clipboard=unnamed
-    " set clipboard=
+else
+    set clipboard=
 endif
-set clipboard=unnamed
 
 if g:os != "win"
     set shellslash
@@ -71,16 +71,16 @@ set guioptions=egc
 set laststatus=2
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
 set noequalalways
-set noerrorbells 
+set noerrorbells
 set novisualbell
-set ruler 
+set ruler
 set showcmd
 set showmatch
 set showmode
 set showtabline=1
 set statusline=%<%f\ %h%m%r%y[%{&ff}]%=%-14.(%l,%c%V%)\ %P
 set synmaxcol=1000
-set winminheight=0 
+set winminheight=0
 set winminwidth=0
 
 if has("gui_running")
@@ -102,20 +102,20 @@ endif
 
 " Search Settings: {{{2 ------------------------------------------------------
 
-set ignorecase 
-set incsearch 
-set nohlsearch 
+set ignorecase
+set incsearch
+set nohlsearch
 set smartcase
 
 
 " Indentation Settings: {{{2 -------------------------------------------------
 
 set autoindent
-set tabstop=4 
-set softtabstop=4 
-set shiftwidth=4 
-set expandtab 
-set smarttab 
+set tabstop=4
+set softtabstop=4
+set shiftwidth=4
+set expandtab
+set smarttab
 set shiftround
 
 
@@ -123,7 +123,7 @@ set shiftround
 
 set complete=.,w,b,u
 set completeopt=longest,menu
-set wildmenu 
+set wildmenu
 set wildmode=list:longest,full
 
 
@@ -132,8 +132,8 @@ set wildmode=list:longest,full
 filetype plugin indent on
 set autoread
 set fileformats=unix,dos
-set nobackup 
-set nowritebackup 
+set nobackup
+set nowritebackup
 set noswapfile
 
 
@@ -278,14 +278,13 @@ call vundle#rc(s:vundle_path)
 Plugin 'gmarik/vundle'
 
 Plugin 'bling/vim-airline'
-Plugin 'ctrlpvim/ctrlp.vim'
+" Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
 Plugin 'hdima/python-syntax'
 Plugin 'hynek/vim-python-pep8-indent'
 Plugin 'jonathanfilip/vim-dbext'
 Plugin 'jonathanfilip/vim-lucius'
-"Plugin 'kien/ctrlp.vim'
 Plugin 'majutsushi/tagbar'
 " Plugin 'terryma/vim-multiple-cursors'
 Plugin 'othree/xml.vim'
@@ -301,6 +300,7 @@ Plugin 'will133/vim-dirdiff'
 Plugin 'jonathanfilip/vim-vcscommand'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
+Plugin 'Shougo/unite.vim'
 
 filetype plugin indent on
 
@@ -343,6 +343,20 @@ nnoremap <silent> <leader>b :CtrlPBuffer<CR>
 "nnoremap <silent> <leader>t :CtrlPBufTag<CR>
 
 
+" Unite: {{{2 ----------------------------------------------------------------
+
+let g:unite_source_history_yank_enable = 1
+
+call unite#filters#matcher_default#use(['matcher_fuzzy'])
+call unite#filters#sorter_default#use(['sorter_rank'])
+call unite#custom#source('file,file/new,buffer,file_rec,line', 'matchers', 'matcher_fuzzy')
+
+nnoremap <leader>e :Unite -buffer-name=file_search -start-insert file_rec<cr>
+nnoremap <leader>b :<C-u>Unite -buffer-name=buffer_search -start-insert buffer<cr>
+
+nnoremap <leader>y :<C-u>Unite history/yank<CR>
+
+
 " Dbext: {{{2 ----------------------------------------------------------------
 
 let g:dbext_default_prompt_for_parameters = 0
@@ -382,17 +396,18 @@ nnoremap <S-F3> :NERDTreeClose<CR>
 " Pandoc: {{{2 ---------------------------------------------------------------
 
 let g:pandoc#modules#enabled = [
-            \"bibliographies",
-            \"completion",
             \"command",
             \"formatting",
-            \"menu",
             \"metadata",
             \"keyboard" ,
             \"toc",
-            \"chdir",
-            \"spell",
-            \"hypertext"]
+            \"completion",
+            \]
+            " \"chdir", " this guy causes a problem on Windows
+            " \"menu",
+            " \"hypertext"
+            " \"spell",
+            " \"bibliographies",
             " \"folding",
 
 let g:pandoc#formatting#mode = "h"
@@ -446,7 +461,7 @@ let g:SuperTabContextTextOmniPrecedence = ["&completefunc"]
 
 augroup super_tab
     autocmd!
-    autocmd BufEnter *.md,*.txt,*.wiki :let b:SuperTabNoCompleteAfter = 
+    autocmd BufEnter *.md,*.txt,*.wiki :let b:SuperTabNoCompleteAfter =
                 \ g:SuperTabNoCompleteAfter + ['\.', '\*', '-', ')']
 augroup end
 
