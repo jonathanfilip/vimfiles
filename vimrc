@@ -278,7 +278,7 @@ call vundle#rc(s:vundle_path)
 Plugin 'gmarik/vundle'
 
 Plugin 'bling/vim-airline'
-" Plugin 'ctrlpvim/ctrlp.vim'
+Plugin 'ctrlpvim/ctrlp.vim'
 Plugin 'elzr/vim-json'
 Plugin 'ervandew/supertab'
 Plugin 'hdima/python-syntax'
@@ -300,7 +300,7 @@ Plugin 'will133/vim-dirdiff'
 Plugin 'jonathanfilip/vim-vcscommand'
 Plugin 'vim-pandoc/vim-pandoc'
 Plugin 'vim-pandoc/vim-pandoc-syntax'
-Plugin 'Shougo/unite.vim'
+" Plugin 'Shougo/unite.vim'
 
 filetype plugin indent on
 
@@ -345,16 +345,16 @@ nnoremap <silent> <leader>b :CtrlPBuffer<CR>
 
 " Unite: {{{2 ----------------------------------------------------------------
 
-let g:unite_source_history_yank_enable = 1
+" let g:unite_source_history_yank_enable = 1
 
-call unite#filters#matcher_default#use(['matcher_fuzzy'])
-call unite#filters#sorter_default#use(['sorter_rank'])
-call unite#custom#source('file,file/new,buffer,file_rec,line', 'matchers', 'matcher_fuzzy')
-
-nnoremap <leader>e :Unite -buffer-name=file_search -start-insert file_rec<cr>
-nnoremap <leader>b :<C-u>Unite -buffer-name=buffer_search -start-insert buffer<cr>
-
-nnoremap <leader>y :<C-u>Unite history/yank<CR>
+" call unite#filters#matcher_default#use(['matcher_fuzzy'])
+" call unite#filters#sorter_default#use(['sorter_rank'])
+" call unite#custom#source('file,file/new,buffer,file_rec,line', 'matchers', 'matcher_fuzzy')
+"
+" nnoremap <leader>e :Unite -buffer-name=file_search -start-insert file_rec<cr>
+" nnoremap <leader>b :<C-u>Unite -buffer-name=buffer_search -start-insert buffer<cr>
+"
+" nnoremap <leader>y :<C-u>Unite history/yank<CR>
 
 
 " Dbext: {{{2 ----------------------------------------------------------------
