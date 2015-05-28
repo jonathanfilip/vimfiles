@@ -266,44 +266,38 @@ command! WQ wq
 
 " Plugins: {{{1 ==============================================================
 
-filetype off
-" set the runtime path to include Vundle and initialize
-let s:vundle_path = expand("~/.vim/bundle/")
 if has("win32") || has("win64")
-    let s:vundle_path = expand("~/vimfiles/bundle/")
+    call plug#begin('~/vimfiles/bundle')
+else
+    call plug#begin('~/.vim/bundle')
 endif
-execute "set runtimepath+=" . s:vundle_path . "/vundle/"
-call vundle#rc(s:vundle_path)
 
-Plugin 'gmarik/vundle'
+Plug 'bling/vim-airline'
+Plug 'ctrlpvim/ctrlp.vim'
+Plug 'elzr/vim-json'
+Plug 'ervandew/supertab'
+Plug 'hdima/python-syntax'
+Plug 'hynek/vim-python-pep8-indent'
+Plug 'jonathanfilip/vim-dbext'
+Plug 'jonathanfilip/vim-lucius'
+" Plug 'justinmk/vim-sneak'
+Plug 'majutsushi/tagbar'
+" Plug 'terryma/vim-multiple-cursors'
+Plug 'othree/xml.vim'
+"Plug 'scrooloose/nerdcommenter'
+Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
+"Plug 'scrooloose/syntastic'
+Plug 'tomtom/tcomment_vim'
+" Plug 'tpope/vim-markdown'
+"Plug 'tpope/vim-surround'
+Plug 'tpope/vim-vinegar'
+Plug 'will133/vim-dirdiff'
+" Plug 'vim-scripts/vcscommand.vim'
+Plug 'jonathanfilip/vim-vcscommand'
+Plug 'vim-pandoc/vim-pandoc'
+Plug 'vim-pandoc/vim-pandoc-syntax'
 
-Plugin 'bling/vim-airline'
-Plugin 'ctrlpvim/ctrlp.vim'
-Plugin 'elzr/vim-json'
-Plugin 'ervandew/supertab'
-Plugin 'hdima/python-syntax'
-Plugin 'hynek/vim-python-pep8-indent'
-Plugin 'jonathanfilip/vim-dbext'
-Plugin 'jonathanfilip/vim-lucius'
-Plugin 'majutsushi/tagbar'
-" Plugin 'terryma/vim-multiple-cursors'
-Plugin 'othree/xml.vim'
-"Plugin 'scrooloose/nerdcommenter'
-"Plugin 'scrooloose/nerdtree'
-"Plugin 'scrooloose/syntastic'
-Plugin 'tomtom/tcomment_vim'
-" Plugin 'tpope/vim-markdown'
-"Plugin 'tpope/vim-surround'
-Plugin 'tpope/vim-vinegar'
-Plugin 'will133/vim-dirdiff'
-" Plugin 'vim-scripts/vcscommand.vim'
-Plugin 'jonathanfilip/vim-vcscommand'
-Plugin 'vim-pandoc/vim-pandoc'
-Plugin 'vim-pandoc/vim-pandoc-syntax'
-" Plugin 'Shougo/unite.vim'
-
-filetype plugin indent on
-
+call plug#end()
 
 " Airline: {{{2 --------------------------------------------------------------
 
@@ -389,8 +383,6 @@ let g:NERDTreeWinPos = 'left'
 let g:NERDTreeWinSize = 32
 
 nnoremap <F3> :NERDTreeToggle<CR>
-nnoremap <C-F3> :NERDTree<CR>
-nnoremap <S-F3> :NERDTreeClose<CR>
 
 
 " Pandoc: {{{2 ---------------------------------------------------------------
