@@ -420,6 +420,7 @@ let g:pandoc#syntax#codeblocks#embeds#langs = [
             \"c",
             \"cs",
             \"sql",
+            \"xml",
             \]
 
 
