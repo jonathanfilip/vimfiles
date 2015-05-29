@@ -275,11 +275,11 @@ endif
 Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elzr/vim-json'
-Plug 'ervandew/supertab'
 Plug 'hdima/python-syntax'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'jonathanfilip/vim-dbext'
 Plug 'jonathanfilip/vim-lucius'
+Plug 'jonathanfilip/VimCompletesMe'
 " Plug 'justinmk/vim-sneak'
 Plug 'majutsushi/tagbar'
 " Plug 'terryma/vim-multiple-cursors'
@@ -444,19 +444,6 @@ let g:sqlutil_align_where = 0
 let g:sqlutil_align_comma = 1
 let g:sqlutil_align_first_word = 1
 let g:sqlutil_keyword_case = '\L'
-
-
-" SuperTab: {{{2 -------------------------------------------------------------
-
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
-let g:SuperTabContextTextOmniPrecedence = ["&completefunc"]
-
-augroup super_tab
-    autocmd!
-    autocmd BufEnter *.md,*.txt,*.wiki :let b:SuperTabNoCompleteAfter =
-                \ g:SuperTabNoCompleteAfter + ['\.', '\*', '-', ')']
-augroup end
 
 
 " Syntastic: {{{2 ------------------------------------------------------------
