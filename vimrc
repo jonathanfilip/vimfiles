@@ -77,8 +77,6 @@ set ruler
 set showcmd
 set showmatch
 set showmode
-set showtabline=1
-set statusline=%<%f\ %h%m%r%y[%{&ff}]%=%-14.(%l,%c%V%)\ %P
 set synmaxcol=1000
 set winminheight=0
 set winminwidth=0
@@ -154,8 +152,6 @@ set wildignore+=cscope.out,tags " vim
 
 let g:mapleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
-"let g:mapleader = ";"
-"let g:maplocalleader = ";"
 
 " Indenting in visual mode
 xnoremap <tab> >gv
@@ -280,19 +276,13 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'jonathanfilip/vim-dbext'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'jonathanfilip/VimCompletesMe'
-" Plug 'justinmk/vim-sneak'
 Plug 'majutsushi/tagbar'
-" Plug 'terryma/vim-multiple-cursors'
 Plug 'othree/xml.vim'
-"Plug 'scrooloose/nerdcommenter'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
-"Plug 'scrooloose/syntastic'
+Plug 'scrooloose/syntastic'
 Plug 'tomtom/tcomment_vim'
-" Plug 'tpope/vim-markdown'
-"Plug 'tpope/vim-surround'
 Plug 'tpope/vim-vinegar'
 Plug 'will133/vim-dirdiff'
-" Plug 'vim-scripts/vcscommand.vim'
 Plug 'jonathanfilip/vim-vcscommand'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
@@ -312,18 +302,18 @@ let g:ctags_bin = "ctags"
 
 " CtrlP: {{{2 ----------------------------------------------------------------
 
-let g:ctrlp_working_path_mode = 0
-let g:ctrlp_show_hidden = 0
-let g:ctrlp_max_height = 20
-let g:ctrlp_clear_cache_on_exit = 0
-let g:ctrlp_lazy_update = 0
 let g:ctrlp_buftag_ctags_bin = g:ctags_bin
-let g:ctrlp_switch_buffer = 'vh'
-let g:ctrlp_extensions = ['buffertag']
+let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = {
             \ 'dir': 'tests$',
             \ 'file': '',
             \ }
+let g:ctrlp_extensions = ['buffertag']
+let g:ctrlp_lazy_update = 0
+let g:ctrlp_max_height = 20
+let g:ctrlp_show_hidden = 0
+let g:ctrlp_switch_buffer = 'vh'
+let g:ctrlp_working_path_mode = 0
 
 nnoremap <silent> <leader>ff :CtrlP<CR>
 nnoremap <silent> <leader>fb :CtrlPBuffer<CR>
@@ -332,23 +322,6 @@ nnoremap <silent> <leader>ft :CtrlPBufTag<CR>
 
 nnoremap <silent> <leader>e :CtrlP<CR>
 nnoremap <silent> <leader>b :CtrlPBuffer<CR>
-"nnoremap <silent> <leader>o :CtrlP<CR>
-"nnoremap <silent> <leader>r :CtrlPMRU<CR>
-"nnoremap <silent> <leader>t :CtrlPBufTag<CR>
-
-
-" Unite: {{{2 ----------------------------------------------------------------
-
-" let g:unite_source_history_yank_enable = 1
-
-" call unite#filters#matcher_default#use(['matcher_fuzzy'])
-" call unite#filters#sorter_default#use(['sorter_rank'])
-" call unite#custom#source('file,file/new,buffer,file_rec,line', 'matchers', 'matcher_fuzzy')
-"
-" nnoremap <leader>e :Unite -buffer-name=file_search -start-insert file_rec<cr>
-" nnoremap <leader>b :<C-u>Unite -buffer-name=buffer_search -start-insert buffer<cr>
-"
-" nnoremap <leader>y :<C-u>Unite history/yank<CR>
 
 
 " Dbext: {{{2 ----------------------------------------------------------------
@@ -363,12 +336,6 @@ let g:dbext_default_history_file = "$HOME/.dbext_sql_history.txt"
 
 let g:projects = {}
 let g:databases = {}
-
-
-" NERD Commenter: {{{2 -------------------------------------------------------
-
-let g:NERDShutUp = 1
-let g:NERDRemoveExtraSpaces=0
 
 
 " NERD Tree: {{{2 ------------------------------------------------------------
@@ -395,12 +362,6 @@ let g:pandoc#modules#enabled = [
             \"toc",
             \"completion",
             \]
-            " \"chdir", " this guy causes a problem on Windows
-            " \"menu",
-            " \"hypertext"
-            " \"spell",
-            " \"bibliographies",
-            " \"folding",
 
 let g:pandoc#formatting#mode = "h"
 let g:pandoc#formatting#textwidth = "79"
@@ -435,15 +396,6 @@ augroup python
     autocmd!
     autocmd BufEnter *.py :syntax sync fromstart " helps with ''' comments
 augroup end
-
-
-" SQLUtilities: {{{2 ---------------------------------------------------------
-
-let g:sql_type_default = "sqlanywhere"
-let g:sqlutil_align_where = 0
-let g:sqlutil_align_comma = 1
-let g:sqlutil_align_first_word = 1
-let g:sqlutil_keyword_case = '\L'
 
 
 " Syntastic: {{{2 ------------------------------------------------------------
