@@ -271,21 +271,21 @@ endif
 Plug 'bling/vim-airline'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elzr/vim-json'
+Plug 'ervandew/supertab'
 Plug 'hdima/python-syntax'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'jonathanfilip/vim-dbext'
 Plug 'jonathanfilip/vim-lucius'
-Plug 'jonathanfilip/VimCompletesMe'
+Plug 'jonathanfilip/vim-vcscommand'
 Plug 'majutsushi/tagbar'
 Plug 'othree/xml.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-vinegar'
-Plug 'will133/vim-dirdiff'
-Plug 'jonathanfilip/vim-vcscommand'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
+Plug 'will133/vim-dirdiff'
 
 call plug#end()
 
@@ -395,6 +395,19 @@ let g:pyindent_continue = "&sw"
 augroup python
     autocmd!
     autocmd BufEnter *.py :syntax sync fromstart " helps with ''' comments
+augroup end
+
+
+" SuperTab: {{{2 -------------------------------------------------------------
+
+let g:SuperTabDefaultCompletionType = "context"
+let g:SuperTabContextDefaultCompletionType = "<c-n>"
+let g:SuperTabContextTextOmniPrecedence = ["&completefunc"]
+
+augroup super_tab
+    autocmd!
+    autocmd BufEnter *.md,*.txt,*.wiki :let b:SuperTabNoCompleteAfter =
+                \ g:SuperTabNoCompleteAfter + ['\.', '\*', '-', ')']
 augroup end
 
 
