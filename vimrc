@@ -1,5 +1,5 @@
 ﻿" Vim configuration file
-" Author: Jonathan Filip2
+" Author: Jonathan Filip
 
 
 " Setup: {{{1 ================================================================
@@ -44,9 +44,23 @@ endif
 
 " Use system clipboard
 if has("clipboard")
-    set clipboard=unnamed
+    if has("unnamedplus")
+        set clipboard=unnamedplus,unnamed
+    else
+        set clipboard=unnamed
+    endif
 else
     set clipboard=
+endif
+
+" Grep
+if has('unix')
+    if executable('ag')
+        set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
+    elseif executable('ack')
+        set grepprg=ack\ -s\ --with-filename\ --nocolor\ --nogroup\ --column
+    endif
+    set grepformat=%f:%l:%c:%m,%f:%l:%m
 endif
 
 if g:os != "win"
@@ -57,7 +71,9 @@ syntax on
 
 set tags=./tags;/.
 
-if version >= 703
+if version >= 704
+    set cryptmethod=blowfish2
+elseif version >= 703
     set cryptmethod=blowfish
 endif
 
@@ -266,6 +282,7 @@ else
 endif
 
 Plug 'bling/vim-airline'
+Plug 'chaoren/vim-wordmotion'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elzr/vim-json'
 Plug 'ervandew/supertab'
