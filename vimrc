@@ -281,7 +281,8 @@ else
     call plug#begin('~/.vim/bundle')
 endif
 
-Plug 'bling/vim-airline'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 Plug 'chaoren/vim-wordmotion'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elzr/vim-json'
