@@ -1,5 +1,5 @@
 ﻿" Vim configuration file
-" Author: Jonathan Filip
+" Author: Jonathan Filip2
 
 
 " Setup: {{{1 ================================================================
@@ -119,7 +119,7 @@ set shiftround
 
 " Completion Settings: {{{2 --------------------------------------------------
 
-set complete=.,w,b,u
+set complete=.,t,w,b,u
 set completeopt=longest,menu
 set wildmenu
 set wildmode=list:longest,full
@@ -185,17 +185,14 @@ nnoremap <C-h> <C-w>h
 nnoremap <C-l> <C-w>l
 
 " Resize windows
-if has("gui_running")
-    nnoremap <S-Up> 10<C-W>+
-    nnoremap <S-Down> 10<C-W>-
-    nnoremap <S-Left> 10<C-W><
-    nnoremap <S-Right> 10<C-W>>
-else
-    nnoremap <Up> 10<C-W>+
-    nnoremap <Down> 10<C-W>-
-    nnoremap <Left> 10<C-W><
-    nnoremap <Right> 10<C-W>>
-endif
+nnoremap <Up> 10<C-W>+
+nnoremap <Down> 10<C-W>-
+nnoremap <Left> 10<C-W><
+nnoremap <Right> 10<C-W>>
+
+" Transpose and indent lines
+nnoremap <S-Down> :move+<CR>==
+nnoremap <S-Up> :move-2<CR>==
 
 " Splitting
 nnoremap <leader>sp :split<CR>
@@ -274,7 +271,8 @@ Plug 'elzr/vim-json'
 Plug 'ervandew/supertab'
 Plug 'hdima/python-syntax'
 Plug 'hynek/vim-python-pep8-indent'
-Plug 'jonathanfilip/vim-dbext'
+Plug 'vim-scripts/dbext.vim'
+Plug 'tpope/vim-fugitive'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'jonathanfilip/vim-vcscommand'
 Plug 'majutsushi/tagbar'
@@ -282,12 +280,13 @@ Plug 'othree/xml.vim'
 Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
 Plug 'tomtom/tcomment_vim'
-Plug 'tpope/vim-vinegar'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 Plug 'will133/vim-dirdiff'
+Plug 'wellle/targets.vim'
 
 call plug#end()
+
 
 " Airline: {{{2 --------------------------------------------------------------
 
