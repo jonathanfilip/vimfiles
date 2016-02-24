@@ -71,7 +71,7 @@ syntax on
 
 set tags=./tags;/.
 
-if version >= 704
+if version >= 704 && has("patch-7.4-399")
     set cryptmethod=blowfish2
 elseif version >= 703
     set cryptmethod=blowfish
