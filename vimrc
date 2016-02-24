@@ -25,6 +25,9 @@ set backspace=indent,eol,start
 set confirm
 set foldmethod=manual
 set formatoptions=tcrqn
+if v:version > 703 || v:version == 703 && has("patch541")
+    set formatoptions+=j
+endif
 set nojoinspaces
 set nowrap
 set nrformats-=octal
@@ -81,10 +84,13 @@ endif
 " UI Settings: {{{2 ----------------------------------------------------------
 
 set cmdheight=1
+set colorcolumn=+1
 set cursorline
+set display+=lastline
 set fillchars=
 set guioptions=egc
 set laststatus=2
+set lazyredraw
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
 set noequalalways
 set noerrorbells
@@ -108,6 +114,7 @@ if has("gui_running")
         set guifont=Consolas:h10
     elseif has("gui_macvim")
         set guifont=Consolas:h13
+        set antialias
     endif
 else
     set guioptions+=aA
@@ -135,7 +142,7 @@ set shiftround
 
 " Completion Settings: {{{2 --------------------------------------------------
 
-set complete=.,t,w,b,u
+set complete=.,w,b,u
 set completeopt=longest,menu
 set wildmenu
 set wildmode=list:longest,full
@@ -170,10 +177,10 @@ let g:mapleader = "\<Space>"
 let g:maplocalleader = "\<Space>"
 
 " Indenting in visual mode
-xnoremap <tab> >gv
-xnoremap <s-tab> <gv
-xnoremap > >gv
-xnoremap < <gv
+xnoremap <silent> <tab> >gv
+xnoremap <silent> <s-tab> <gv
+xnoremap <silent> > >gv
+xnoremap <silent> < <gv
 
 " Backspace
 xnoremap <BS> d
@@ -188,7 +195,7 @@ noremap <Leader>gq gqap
 
 " Buffer contorls
 nnoremap <silent> <leader>n :bnext<CR>
-nnoremap <silent> <leader>N :bprev<CR>
+nnoremap <silent> <leader>p :bprev<CR>
 
 " Diff commands
 nnoremap <silent> <leader>dt :diffthis<CR>
@@ -207,8 +214,12 @@ nnoremap <Left> 10<C-W><
 nnoremap <Right> 10<C-W>>
 
 " Transpose and indent lines
-nnoremap <S-Down> :move+<CR>==
-nnoremap <S-Up> :move-2<CR>==
+nnoremap <silent> <S-Up> :move-2<CR>==
+nnoremap <silent> <S-Down> :move+<CR>==
+inoremap <silent> <S-Up> <Esc>:move-2<CR>==gi
+inoremap <silent> <S-Down> <Esc>:move+<CR>==gi
+vnoremap <silent> <S-Up> :move'<-2<CR>gv=gv
+vnoremap <silent> <S-Down> :move'>+<CR>gv=gv
 
 " Splitting
 nnoremap <leader>sp :split<CR>
@@ -216,14 +227,6 @@ nnoremap <leader>vs :vsplit<CR>
 
 " Make x not yank to register
 noremap x "_x
-
-" Global copy and paste
-xnoremap <leader>y "*y
-xnoremap <leader>d "*d
-xnoremap <leader>p "*p
-nnoremap <leader>p "*p
-xnoremap <leader>P "*P
-nnoremap <leader>P "*P
 
 " CTRL-A is Select all, etc
 if g:os != "osx"
@@ -251,6 +254,18 @@ inoremap <4-MiddleMouse> <Nop>
 
 " Get rid of Ex mode
 nnoremap <S-Q> <Q>
+
+" Wrap a word in quotes
+nnoremap <silent> <leader>q' ciw'<C-R><C-O>"'<Esc>
+nnoremap <silent> <leader>q" ciw"<C-R><C-O>""<Esc>
+nnoremap <silent> <leader>q" ciw"<C-R><C-O>""<Esc>
+nnoremap <silent> <leader>q( ciw(<C-R><C-O>")<Esc>
+nnoremap <silent> <leader>q[ ciw[<C-R><C-O>"]<Esc>
+nnoremap <silent> <leader>q{ ciw{<C-R><C-O>"}<Esc>
+nnoremap <silent> <leader>q< ciw<<C-R><C-O>"><Esc>
+
+" Preview tag on Enter
+nnoremap <silent> <leader><CR> :ptjump <C-R>=expand("<cword>")<CR><CR>
 
 
 " Commands: {{{1 =============================================================
@@ -281,35 +296,44 @@ else
     call plug#begin('~/.vim/bundle')
 endif
 
-Plug 'vim-airline/vim-airline'
-Plug 'vim-airline/vim-airline-themes'
 Plug 'chaoren/vim-wordmotion'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elzr/vim-json'
 Plug 'ervandew/supertab'
 Plug 'hdima/python-syntax'
 Plug 'hynek/vim-python-pep8-indent'
-Plug 'vim-scripts/dbext.vim'
-Plug 'tpope/vim-fugitive'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'jonathanfilip/vim-vcscommand'
 Plug 'majutsushi/tagbar'
 Plug 'othree/xml.vim'
-Plug 'scrooloose/nerdtree', { 'on': 'NERDTreeToggle' }
 Plug 'scrooloose/syntastic'
 Plug 'tomtom/tcomment_vim'
+Plug 'tpope/vim-fugitive'
+Plug 'vim-airline/vim-airline'
+Plug 'jonathanfilip/vim-airline-themes'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'will133/vim-dirdiff'
+Plug 'vim-scripts/dbext.vim'
 Plug 'wellle/targets.vim'
+Plug 'will133/vim-dirdiff'
 
 call plug#end()
 
 
 " Airline: {{{2 --------------------------------------------------------------
 
-let g:airline_left_sep=''
-let g:airline_right_sep=''
+let g:airline_left_sep = ''
+let g:airline_right_sep = ''
+let g:airline_inactive_collapse=1
+
+let g:airline#extensions#wordcount#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
+let g:airline#extensions#tabline#enabled = 0
+
+let g:airline#extensions#default#layout = [
+    \ [ 'a', 'c' ],
+    \ [ 'x', 'y', 'z', 'error', 'warning' ]
+    \ ]
 
 
 " Ctags: {{{2 ----------------------------------------------------------------
@@ -327,7 +351,7 @@ let g:ctrlp_custom_ignore = {
             \ }
 let g:ctrlp_extensions = ['buffertag']
 let g:ctrlp_lazy_update = 0
-let g:ctrlp_max_height = 20
+let g:ctrlp_match_window='position:bottom,order:btt,min:1,max:10,results:100'
 let g:ctrlp_show_hidden = 0
 let g:ctrlp_switch_buffer = 'vh'
 let g:ctrlp_working_path_mode = 0
@@ -353,20 +377,6 @@ let g:dbext_default_history_file = "$HOME/.dbext_sql_history.txt"
 
 let g:projects = {}
 let g:databases = {}
-
-
-" NERD Tree: {{{2 ------------------------------------------------------------
-
-let g:NERDTreeChDirMode = 0
-let g:NERDChristmasTree = 1
-let g:NERDTreeCaseSensitiveSort = 0
-let g:NERDTreeIgnore = ['\.doc$', '\.pdf$', '\.xls$', '\.docx$',
-            \'\.zip$', '\.dll$', '\.so$', '\.pyc$', '\~$']
-let g:NERDTreeShowHidden = 0
-let g:NERDTreeWinPos = 'left'
-let g:NERDTreeWinSize = 32
-
-nnoremap <F3> :NERDTreeToggle<CR>
 
 
 " Pandoc: {{{2 ---------------------------------------------------------------
@@ -449,8 +459,7 @@ nnoremap <Leader>sr :SyntasticReset<CR>
 
 " Tagbar: {{{2 ---------------------------------------------------------------
 
-let g:tagbar_compact = 0
-let g:tagbar_left = 1
+let g:tagbar_compact = 1
 let g:tagbar_iconchars = ['+', '-']
 let g:tagbar_ctags_bin = g:ctags_bin
 let g:tagbar_type_python = {
@@ -480,7 +489,6 @@ augroup VCSCommand
 augroup end
 
 
-
 " Colorscheme: {{{1 ==========================================================
 
 colorscheme lucius
@@ -492,8 +500,10 @@ LuciusLight
 " Only show cursor line in current buffer in normal mode
 augroup cursor_line
     autocmd!
-    autocmd WinLeave,InsertEnter * set nocursorline
-    autocmd WinEnter,InsertLeave * set cursorline
+    autocmd InsertEnter * set nocursorline
+    autocmd InsertLeave * set cursorline
+    autocmd WinEnter * set cursorline colorcolumn=+1
+    autocmd WinLeave * set nocursorline colorcolumn=
 augroup end
 
 " Close the preview window automatically
@@ -506,7 +516,8 @@ augroup end
 " Set xaml to be like xml
 augroup xaml
     autocmd!
-    autocmd BufNewFile,BufRead *.xaml setfiletype xml
+    autocmd BufNewFile *.xaml setfiletype xml
+    autocmd BufRead *.xaml setfiletype xml
 augroup end
 
 
