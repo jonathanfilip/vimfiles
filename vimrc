@@ -489,6 +489,11 @@ augroup VCSCommand
 augroup end
 
 
+" WordMotion: {{{2 ------------------------------------------------------------------
+
+let g:wordmotion_prefix='<leader>'
+
+
 " Colorscheme: {{{1 ==========================================================
 
 colorscheme lucius
@@ -535,5 +540,5 @@ if filereadable(expand("~/.vimrc_local"))
     source ~/.vimrc_local
 endif
 
-" vim: foldenable foldmethod=marker
+" vim: nofoldenable foldmethod=marker
 
