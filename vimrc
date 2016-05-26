@@ -72,6 +72,7 @@ endif
 
 syntax on
 
+set path=.,**
 set tags=./tags;/.
 
 if version >= 704 && has("patch-7.4-399")
@@ -144,21 +145,11 @@ set shiftround
 
 set complete=.,w,b,u
 set completeopt=longest,menu
+set wildignorecase
 set wildmenu
-set wildmode=list:longest,full
-
-
-" File Settings: {{{2 --------------------------------------------------------
-
-filetype plugin indent on
-set autoread
-set fileformats=unix,dos
-set nobackup
-set nowritebackup
-set noswapfile
-
-
-" Wild Ignore Settings: {{{2 -------------------------------------------------
+set wildmode=longest:full,full
+" set wildmode=list:longest,full
+set pumheight=16
 
 set wildignore+=*.pyc,*.pyd,*.pyo " python files
 set wildignore+=*.bmp,*.gif,*.ico,*.png,*.jpg,*.jpeg " images
@@ -169,6 +160,16 @@ set wildignore+=*.h5,*.gz " compressed files
 set wildignore+=*.bak,*~,tmp " misc files
 set wildignore+=.svn\*,.git\* " scm
 set wildignore+=cscope.out,tags " vim
+
+
+" File Settings: {{{2 --------------------------------------------------------
+
+filetype plugin indent on
+set autoread
+set fileformats=unix,dos
+set nobackup
+set nowritebackup
+set noswapfile
 
 
 " Mappings: {{{1 =============================================================
@@ -267,6 +268,9 @@ nnoremap <silent> <leader>q< ciw<<C-R><C-O>"><Esc>
 " Preview tag on Enter
 nnoremap <silent> <leader><CR> :ptjump <C-R>=expand("<cword>")<CR><CR>
 
+" Highlight text from last Insert mode
+nnoremap <silent> gV `[v`]
+
 
 " Commands: {{{1 =============================================================
 
@@ -286,6 +290,12 @@ command! Qa qa
 command! W w
 command! Wq wq
 command! WQ wq
+
+" Jump to the next diff and obtain it (repeat with @@, followed by @:)
+command! -nargs=0 Fix :normal! ]cdo<CR>
+
+" Find TODO, XXX, etc.
+command! -nargs=0 Todo :lvimgrep /\#\s*\(XXX\|TODO\|NOTE\)/ %<CR>
 
 
 " Plugins: {{{1 ==============================================================
@@ -443,7 +453,7 @@ augroup end
 let g:syntastic_check_on_open = 0
 let g:syntastic_echo_current_error = 1
 let g:syntastic_enable_signs = 1
-let g:syntastic_enable_balloons = 1
+let g:syntastic_enable_balloons = has("gui")
 let g:syntastic_always_populate_loc_list=1
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_auto_loc_list = 1
@@ -451,7 +461,7 @@ let g:syntastic_mode_map = {
             \ "mode": "passive",
             \ "active_filetypes": [],
             \ "passive_filetypes": [] }
-let g:syntastic_python_checkers = ["pyflakes"]
+let g:syntastic_python_checkers = ["pyflakes", "pep8"]
 
 nnoremap <Leader>sc :SyntasticCheck<CR>
 nnoremap <Leader>sr :SyntasticReset<CR>
@@ -536,8 +546,8 @@ endif
 
 " Local Settings: {{{1 =======================================================
 
-if filereadable(expand("~/.vimrc_local"))
-    source ~/.vimrc_local
+if filereadable(expand("~/.vimrc.local"))
+    source ~/.vimrc.local
 endif
 
 " vim: nofoldenable foldmethod=marker
