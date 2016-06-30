@@ -91,7 +91,6 @@ set display+=lastline
 set fillchars=
 set guioptions=egc
 set laststatus=2
-set lazyredraw
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
 set noequalalways
 set noerrorbells
@@ -314,7 +313,6 @@ Plug 'hdima/python-syntax'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'jonathanfilip/vim-vcscommand'
-Plug 'majutsushi/tagbar'
 Plug 'othree/xml.vim'
 Plug 'scrooloose/syntastic'
 Plug 'tomtom/tcomment_vim'
@@ -334,12 +332,10 @@ call plug#end()
 
 let g:airline_left_sep = ''
 let g:airline_right_sep = ''
-let g:airline_inactive_collapse=1
+let g:airline_inactive_collapse = 1
+let g:airline_powerline_fonts = 0
 
-let g:airline#extensions#wordcount#enabled = 0
-let g:airline#extensions#whitespace#enabled = 0
-let g:airline#extensions#tabline#enabled = 0
-
+let g:airline_extensions = ['syntastic', 'ctrlp']
 let g:airline#extensions#default#layout = [
     \ [ 'a', 'c' ],
     \ [ 'x', 'y', 'z', 'error', 'warning' ]
@@ -353,17 +349,15 @@ let g:ctags_bin = "ctags"
 
 " CtrlP: {{{2 ----------------------------------------------------------------
 
-let g:ctrlp_buftag_ctags_bin = g:ctags_bin
 let g:ctrlp_clear_cache_on_exit = 0
 let g:ctrlp_custom_ignore = {
             \ 'dir': 'tests$',
             \ 'file': '',
             \ }
-let g:ctrlp_extensions = ['buffertag']
 let g:ctrlp_lazy_update = 0
 let g:ctrlp_match_window='position:bottom,order:btt,min:1,max:10,results:100'
 let g:ctrlp_show_hidden = 0
-let g:ctrlp_switch_buffer = 'vh'
+let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 
 nnoremap <silent> <leader>ff :CtrlP<CR>
@@ -465,26 +459,6 @@ let g:syntastic_python_checkers = ["pyflakes", "pep8"]
 
 nnoremap <Leader>sc :SyntasticCheck<CR>
 nnoremap <Leader>sr :SyntasticReset<CR>
-
-
-" Tagbar: {{{2 ---------------------------------------------------------------
-
-let g:tagbar_compact = 1
-let g:tagbar_iconchars = ['+', '-']
-let g:tagbar_ctags_bin = g:ctags_bin
-let g:tagbar_type_python = {
-    \ 'kinds' : [
-        \ 'c:classes',
-        \ 'f:functions',
-        \ 'm:class members',
-        \ 'v:variables:1',
-        \ 'i:imports:1'
-    \ ]
-\ }
-
-nnoremap <F4> :TagbarToggle<CR>
-noremap <leader>tt :echo tagbar#currenttag('%s','','fs')<CR>
-nnoremap <Leader>tb :TagbarToggle<CR>
 
 
 " VCS: {{{2 ------------------------------------------------------------------
