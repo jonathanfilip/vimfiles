@@ -325,6 +325,11 @@ Plug 'vim-scripts/dbext.vim'
 Plug 'wellle/targets.vim'
 Plug 'will133/vim-dirdiff'
 
+if v:version > 704 || v:version == 704 && has("patch1826")
+    Plug 'airblade/vim-gitgutter'
+endif
+
+
 call plug#end()
 
 
