@@ -24,7 +24,7 @@ set shortmess=filmnrxoOtTI
 set backspace=indent,eol,start
 set confirm
 set foldmethod=manual
-set formatoptions=tcrqn
+set formatoptions=tcrqnl
 if v:version > 703 || v:version == 703 && has("patch541")
     set formatoptions+=j
 endif
@@ -312,7 +312,6 @@ Plug 'ervandew/supertab'
 Plug 'hdima/python-syntax'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'jonathanfilip/vim-lucius'
-Plug 'jonathanfilip/vim-vcscommand'
 Plug 'othree/xml.vim'
 Plug 'scrooloose/syntastic'
 Plug 'tomtom/tcomment_vim'
@@ -464,18 +463,6 @@ let g:syntastic_python_checkers = ["pyflakes", "pep8"]
 
 nnoremap <Leader>sc :SyntasticCheck<CR>
 nnoremap <Leader>sr :SyntasticReset<CR>
-
-
-" VCS: {{{2 ------------------------------------------------------------------
-
-let g:VCSCommandDeleteOnHide = 1
-
-nnoremap <Leader>vd :VCSVimDiff<CR>
-
-augroup VCSCommand
-    autocmd!
-    autocmd User VCSBufferCreated set bufhidden=wipe
-augroup end
 
 
 " WordMotion: {{{2 ------------------------------------------------------------------
