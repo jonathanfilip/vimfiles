@@ -320,7 +320,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'vim-scripts/dbext.vim'
+Plug 'jonathanfilip/dbext.vim'
 Plug 'wellle/targets.vim'
 Plug 'will133/vim-dirdiff'
 
@@ -367,6 +367,10 @@ let g:ctrlp_working_path_mode = 0
 if has('unix')
     if executable('ag')
         let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
+        if len(&wildignore > 0)
+            let g:ctrlp_user_command = g:ctrlp_user_command . ' --ignore=' . &wildignore
+        endif
+
         let g:ctrlp_use_caching = 0
     endif
 endif
