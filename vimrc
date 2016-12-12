@@ -311,6 +311,7 @@ Plug 'elzr/vim-json'
 Plug 'ervandew/supertab'
 Plug 'hdima/python-syntax'
 Plug 'hynek/vim-python-pep8-indent'
+Plug 'jonathanfilip/dbext.vim'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'othree/xml.vim'
 Plug 'scrooloose/syntastic'
@@ -320,7 +321,7 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'jonathanfilip/dbext.vim'
+" Plug 'vimwiki/vimwiki'
 Plug 'wellle/targets.vim'
 Plug 'will133/vim-dirdiff'
 
@@ -480,6 +481,15 @@ nnoremap <Leader>sr :SyntasticReset<CR>
 " WordMotion: {{{2 ------------------------------------------------------------------
 
 let g:wordmotion_prefix='<leader>'
+
+" VimWiki: {{{2 ------------------------------------------------------------------
+
+" let g:vimwiki_list = [{
+"     \ "path": "~/wiki/",
+"     \ "path_html": "~/wiki/html/",
+"     \ "ext": ".md",
+"     \ "syntax": "markdown",
+"     \ }]
 
 
 " Colorscheme: {{{1 ==========================================================
