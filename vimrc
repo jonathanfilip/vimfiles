@@ -40,8 +40,12 @@ set whichwrap+=<,>,h,l
 
 " Terminal
 if !has("gui_running")
-    set t_Co=256
-    set term=xterm-256color
+    if has("termguicolors")
+        set termguicolors
+    else
+        set t_Co=256
+        set term=xterm-256color
+    endif
     set ttymouse=xterm2
 endif
 
