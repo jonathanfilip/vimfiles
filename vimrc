@@ -41,6 +41,9 @@ set whichwrap+=<,>,h,l
 " Terminal
 if !has("gui_running")
     if has("termguicolors")
+        if &term == "screen-256color"
+            set term=xterm-256color
+        endif
         set termguicolors
     else
         set t_Co=256
