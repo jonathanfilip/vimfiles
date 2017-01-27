@@ -5,6 +5,8 @@ endif
 
 set background=dark
 
+let g:colors_name = "aearon"
+
 hi  Normal          guifg=#c0d0e0   guibg=#203040   gui=NONE
 
 hi  Cursor          guifg=bg        guibg=#d0e0f0   gui=NONE
@@ -49,9 +51,9 @@ hi  MoreMsg         guifg=#a0d0c0   guibg=NONE      gui=NONE
 hi  WarningMsg      guifg=#c08050   guibg=NONE      gui=NONE
 
 
-hi  StatusLine      guifg=bg        guibg=#8090a0   gui=NONE
-hi  StatusLineNC    guifg=#506070   guibg=#8090a0   gui=NONE
-hi  VertSplit       guifg=#607080   guibg=#8090a0   gui=NONE
+hi  StatusLine      guifg=bg        guibg=#90a0b0   gui=NONE
+hi  StatusLineNC    guifg=#506070   guibg=#90a0b0   gui=NONE
+hi  VertSplit       guifg=#607080   guibg=#90a0b0   gui=NONE
 
 hi  Visual          guifg=NONE      guibg=#205070   gui=NONE
 
@@ -61,6 +63,7 @@ hi  Pmenu           guifg=bg        guibg=#a0b0c0
 hi  PmenuSbar       guifg=#a0b0c0   guibg=#c0d0e0
 hi  PmenuSel        guifg=fg        guibg=#205070
 hi  PmenuThumb      guifg=fg        guibg=#708090
+hi  WildMenu        guifg=fg        guibg=#205070
 
 hi  SignColumn      guifg=#a0b0c0   guibg=#305060
 hi  TabLine         guifg=bg        guibg=#a0b0c0
