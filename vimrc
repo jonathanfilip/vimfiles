@@ -321,7 +321,7 @@ Plug 'hynek/vim-python-pep8-indent'
 Plug 'jonathanfilip/vim-dbext'
 Plug 'jonathanfilip/vim-lucius'
 Plug 'othree/xml.vim'
-Plug 'scrooloose/syntastic'
+" Plug 'scrooloose/syntastic'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
@@ -329,6 +329,7 @@ Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
 " Plug 'vimwiki/vimwiki'
+Plug 'w0rp/ale'
 Plug 'wellle/targets.vim'
 Plug 'will133/vim-dirdiff'
 
@@ -347,7 +348,8 @@ let g:airline_right_sep = ''
 let g:airline_inactive_collapse = 1
 let g:airline_powerline_fonts = 0
 
-let g:airline_extensions = ['syntastic', 'ctrlp']
+let g:airline_extensions = ['ctrlp']
+" let g:airline_extensions = ['syntastic', 'ctrlp']
 let g:airline#extensions#default#layout = [
     \ [ 'a', 'c' ],
     \ [ 'x', 'y', 'z', 'error', 'warning' ]
@@ -468,21 +470,21 @@ augroup end
 
 " Syntastic: {{{2 ------------------------------------------------------------
 
-let g:syntastic_check_on_open = 0
-let g:syntastic_echo_current_error = 1
-let g:syntastic_enable_signs = 1
-let g:syntastic_enable_balloons = has("gui")
-let g:syntastic_always_populate_loc_list=1
-let g:syntastic_enable_highlighting = 1
-let g:syntastic_auto_loc_list = 1
-let g:syntastic_mode_map = {
-            \ "mode": "passive",
-            \ "active_filetypes": [],
-            \ "passive_filetypes": [] }
-let g:syntastic_python_checkers = ["pyflakes", "pep8"]
-
-nnoremap <Leader>sc :SyntasticCheck<CR>
-nnoremap <Leader>sr :SyntasticReset<CR>
+" let g:syntastic_check_on_open = 0
+" let g:syntastic_echo_current_error = 1
+" let g:syntastic_enable_signs = 1
+" let g:syntastic_enable_balloons = has("gui")
+" let g:syntastic_always_populate_loc_list=1
+" let g:syntastic_enable_highlighting = 1
+" let g:syntastic_auto_loc_list = 1
+" let g:syntastic_mode_map = {
+"             \ "mode": "passive",
+"             \ "active_filetypes": [],
+"             \ "passive_filetypes": [] }
+" let g:syntastic_python_checkers = ["pyflakes", "pep8"]
+"
+" nnoremap <Leader>sc :SyntasticCheck<CR>
+" nnoremap <Leader>sr :SyntasticReset<CR>
 
 
 " WordMotion: {{{2 ------------------------------------------------------------------
