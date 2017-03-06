@@ -278,6 +278,35 @@ nnoremap <silent> <leader><CR> :ptjump <C-R>=expand("<cword>")<CR><CR>
 nnoremap <silent> gV `[v`]
 
 
+" Functions: {{{1 ============================================================
+
+function! s:TabComplete(mode)
+    let cmd = a:mode == "P" ? "\<C-P>" : "\<C-N>"
+    if pumvisible()
+        return cmd
+    endif
+
+    let pos = getpos('.')
+
+    " Only match letters, numbers, slashes, and dots.
+    let pattern = "[A-Za-z0-9/.]*$"
+    let substr = matchstr(strpart(getline(pos[1]), 0, pos[2] - 1), pattern)
+    if empty(substr)
+        return (a:mode == "P") ? "\<C-d>" : "\<Tab>"
+    endif
+
+    let file_path = '\/'
+    let file_pattern = match(substr, file_path) != -1
+    if file_pattern
+        return "\<C-x>\<C-f>"
+    endif
+
+    return cmd
+endfunction
+inoremap <silent> <Tab> <C-R>=<SID>TabComplete("N")<CR>
+inoremap <silent> <S-Tab> <C-R>=<SID>TabComplete("P")<CR>
+
+
 " Commands: {{{1 =============================================================
 
 " Set window title
@@ -315,7 +344,6 @@ endif
 Plug 'chaoren/vim-wordmotion'
 Plug 'ctrlpvim/ctrlp.vim'
 Plug 'elzr/vim-json'
-Plug 'ervandew/supertab'
 Plug 'hdima/python-syntax'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'jonathanfilip/vim-dbext'
@@ -328,7 +356,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-" Plug 'vimwiki/vimwiki'
 Plug 'wellle/targets.vim'
 Plug 'will133/vim-dirdiff'
 
@@ -388,9 +415,6 @@ nnoremap <silent> <leader>ff :CtrlP<CR>
 nnoremap <silent> <leader>fb :CtrlPBuffer<CR>
 nnoremap <silent> <leader>fr :CtrlPMRU<CR>
 nnoremap <silent> <leader>ft :CtrlPBufTag<CR>
-
-nnoremap <silent> <leader>e :CtrlP<CR>
-nnoremap <silent> <leader>b :CtrlPBuffer<CR>
 
 
 " Dbext: {{{2 ----------------------------------------------------------------
@@ -453,19 +477,6 @@ augroup python
 augroup end
 
 
-" SuperTab: {{{2 -------------------------------------------------------------
-
-let g:SuperTabDefaultCompletionType = "context"
-let g:SuperTabContextDefaultCompletionType = "<c-n>"
-let g:SuperTabContextTextOmniPrecedence = ["&completefunc"]
-
-augroup super_tab
-    autocmd!
-    autocmd BufEnter *.md,*.txt,*.wiki :let b:SuperTabNoCompleteAfter =
-                \ g:SuperTabNoCompleteAfter + ['\.', '\*', '-', ')']
-augroup end
-
-
 " Syntastic: {{{2 ------------------------------------------------------------
 
 let g:syntastic_check_on_open = 0
@@ -485,18 +496,9 @@ nnoremap <Leader>sc :SyntasticCheck<CR>
 nnoremap <Leader>sr :SyntasticReset<CR>
 
 
-" WordMotion: {{{2 ------------------------------------------------------------------
+" WordMotion: {{{2 -----------------------------------------------------------
 
 let g:wordmotion_prefix='<leader>'
-
-" VimWiki: {{{2 ------------------------------------------------------------------
-
-" let g:vimwiki_list = [{
-"     \ "path": "~/wiki/",
-"     \ "path_html": "~/wiki/html/",
-"     \ "ext": ".md",
-"     \ "syntax": "markdown",
-"     \ }]
 
 
 " Colorscheme: {{{1 ==========================================================
