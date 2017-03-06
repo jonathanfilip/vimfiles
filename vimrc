@@ -24,10 +24,7 @@ set shortmess=filmnrxoOtTI
 set backspace=indent,eol,start
 set confirm
 set foldmethod=manual
-set formatoptions=tcrqnl
-if v:version > 703 || v:version == 703 && has("patch541")
-    set formatoptions+=j
-endif
+set formatoptions=tcrqnlj
 set nojoinspaces
 set nowrap
 set nrformats-=octal
@@ -482,8 +479,8 @@ augroup end
 let g:syntastic_check_on_open = 0
 let g:syntastic_echo_current_error = 1
 let g:syntastic_enable_signs = 1
-let g:syntastic_enable_balloons = has("gui")
-let g:syntastic_always_populate_loc_list=1
+let g:syntastic_enable_balloons = 1
+let g:syntastic_always_populate_loc_list = 1
 let g:syntastic_enable_highlighting = 1
 let g:syntastic_auto_loc_list = 1
 let g:syntastic_mode_map = {
