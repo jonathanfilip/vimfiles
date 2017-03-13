@@ -370,6 +370,7 @@ let g:airline_left_sep = ''
 let g:airline_right_sep = ''
 let g:airline_inactive_collapse = 1
 let g:airline_powerline_fonts = 0
+let g:airline_symbols_ascii = 1
 
 let g:airline_extensions = ['syntastic', 'ctrlp']
 let g:airline#extensions#default#layout = [
