@@ -41,7 +41,7 @@ if !has("gui_running")
         if &term == "screen-256color"
             set term=xterm-256color
         endif
-        set termguicolors
+        " set termguicolors
     else
         set t_Co=256
         set term=xterm-256color
