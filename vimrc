@@ -300,8 +300,12 @@ function! s:TabComplete(mode)
 
     return cmd
 endfunction
-inoremap <silent> <Tab> <C-R>=<SID>TabComplete("N")<CR>
-inoremap <silent> <S-Tab> <C-R>=<SID>TabComplete("P")<CR>
+
+" Only needed to prevent setting in vsvim
+if v:version > 700
+    inoremap <silent> <Tab> <C-R>=<SID>TabComplete("N")<CR>
+    inoremap <silent> <S-Tab> <C-R>=<SID>TabComplete("P")<CR>
+endif
 
 
 " Commands: {{{1 =============================================================
