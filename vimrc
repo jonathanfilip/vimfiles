@@ -201,6 +201,9 @@ noremap <Leader>gq gqap
 nnoremap <silent> <leader>n :bnext<CR>
 nnoremap <silent> <leader>p :bprev<CR>
 
+" Refresh
+nnoremap <silent> <F5> :e<CR>
+
 " Diff commands
 nnoremap <silent> <leader>dt :diffthis<CR>
 nnoremap <silent> <leader>do :diffoff!<CR>

@@ -39,9 +39,3 @@ nnoremap <F11> :call myfuncs#ToggleSpellCheck()<CR>
 nnoremap <F12> :call myfuncs#ToggleScrollbars()<CR>
 nnoremap <Leader>tw :call myfuncs#ToggleTextWidth()<CR>
 
-" Python
-if has("python")
-    command! -range EvalPythonRange call myfuncs#EvaluateCurrentRange()
-    noremap <silent> <F5> :EvalPythonRange<CR>
-endif
-
