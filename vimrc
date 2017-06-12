@@ -35,6 +35,10 @@ set splitright
 set virtualedit=block
 set whichwrap+=<,>,h,l
 
+set linebreak
+set breakindent
+set showbreak=\ \ \\_
+
 " Terminal
 if !has("gui_running")
     if has("termguicolors")
