@@ -48,7 +48,7 @@ let s:status_line_bg    = 0x608090
 
 let s:statement_fg      = 0x0060b0
 let s:comment_fg        = s:Darken(s:normal_bg, 0x60)
-let s:constant_fg       = 0xb05000
+let s:constant_fg       = 0xa06000
 let s:special_fg        = 0x700090
 let s:identifier_fg     = 0x009020
 let s:preproc_fg        = 0x008080
@@ -114,7 +114,7 @@ call s:Highlight("Title", s:statement_fg, "NONE", "bold")
 call s:Highlight("Underlined", "fg", "NONE", "NONE")
 
 call s:Highlight("IncSearch", "fg", 0x60e0e0, "NONE")
-call s:Highlight("MatchParen", "NONE", 0x80c0c0, "NONE")
+call s:Highlight("MatchParen", "NONE", 0x80e0c0, "NONE")
 call s:Highlight("Search", "fg", 0xf0b000, "NONE")
 
 call s:Highlight("DiffAdd", "fg", 0xa0d0a0, "NONE")
