@@ -4,6 +4,8 @@ if exists("syntax_on")
     syntax reset
 endif
 
+let g:colors_name = "lucius24"
+
 set background=light
 
 function! s:Highlight(group, fg, bg, opt)
@@ -17,7 +19,7 @@ function! s:Highlight(group, fg, bg, opt)
     endif
     let l:cmd = "hi " . a:group . " guifg=" . l:str_fg . " guibg=" . l:str_bg
     if a:opt != ""
-        let l:cmd = l:cmd . " gui=" . a:opt
+        let l:cmd = l:cmd . " gui=" . a:opt . " cterm=" . a:opt
     endif
     exec l:cmd
 endfunction
@@ -38,20 +40,19 @@ endfunction
 
 
 let s:normal_fg         = 0x404040
-let s:normal_bg         = 0xd0d7e0
-let s:normal_bg         = 0xe0e0e0
+let s:normal_bg         = 0xeeeeee
 let s:cursor_bg         = 0x6090b0
-let s:selection_bg      = 0xa0d0f0
+let s:selection_bg      = 0xb0d0f0
+let s:status_line_bg    = 0x608090
 
 let s:statement_fg      = 0x0060b0
-let s:comment_fg        = s:Darken(s:normal_bg, 0x40)
-let s:constant_fg       = 0xb06000
-let s:special_fg        = 0x900090
-let s:identifier_fg     = 0x009000
-let s:preproc_fg        = 0x009090
+let s:comment_fg        = s:Darken(s:normal_bg, 0x60)
+let s:constant_fg       = 0xb07000
+let s:special_fg        = 0x700090
+let s:identifier_fg     = 0x009020
+let s:preproc_fg        = 0x008080
 let s:type_fg           = 0x006090
 
-let s:status_line_bg    = 0x406070
 
 call s:Highlight("Normal", s:normal_fg, s:normal_bg, "NONE") 
 
@@ -65,8 +66,8 @@ call s:Highlight("PreProc", s:preproc_fg, "NONE", "NONE")
 call s:Highlight("Type", s:type_fg, "NONE", "NONE")
 
 call s:Highlight("StatusLine", s:normal_bg, s:status_line_bg, "bold")
-call s:Highlight("StatusLineNC", s:Brighten(s:status_line_bg, 0x40), s:status_line_bg, "NONE")
-call s:Highlight("VertSplit", s:Brighten(s:status_line_bg, 0x40), s:status_line_bg, "NONE")
+call s:Highlight("StatusLineNC", s:Brighten(s:status_line_bg, 0x60), s:status_line_bg, "NONE")
+call s:Highlight("VertSplit", s:Brighten(s:status_line_bg, 0x60), s:status_line_bg, "NONE")
 
 call s:Highlight("Folded", s:status_line_bg, s:Brighten(s:status_line_bg, 0x40), "bold")
 call s:Highlight("FoldColumn", s:status_line_bg, s:Brighten(s:status_line_bg, 0x40), "bold")

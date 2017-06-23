@@ -36,22 +36,35 @@ set virtualedit=block
 set whichwrap+=<,>,h,l
 
 set linebreak
-set breakindent
-set showbreak=\ \ \\_
+if exists("+breakindent")
+    set breakindent
+    set showbreak=\ \ \\_
+endif
 
-" Terminal
+" GUI/terminal and colors
 if !has("gui_running")
     if has("termguicolors")
         if &term == "screen-256color"
             set term=xterm-256color
         endif
-        " set termguicolors
+        set termguicolors
+        let g:airline_theme = "lucius"
+        colorscheme lucius24
+        " TODO Remove these when done
+        map <F2> :colorscheme lucius<CR>
+        map <F3> :colorscheme lucius24<CR>
     else
         set t_Co=256
         set term=xterm-256color
+        colorscheme lucius
+        LuciusLight
     endif
     set ttymouse=xterm2
+else
+    colorscheme lucius
+    LuciusLight
 endif
+
 
 " Use system clipboard
 if has("clipboard")
@@ -518,12 +531,6 @@ augroup end
 " WordMotion: {{{2 -----------------------------------------------------------
 
 let g:wordmotion_prefix='<leader>'
-
-
-" Colorscheme: {{{1 ==========================================================
-
-colorscheme lucius
-LuciusLight
 
 
 " Autocommands: {{{1 =========================================================
