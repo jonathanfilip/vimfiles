@@ -41,13 +41,14 @@ endfunction
 
 let s:normal_fg         = 0x404040
 let s:normal_bg         = 0xeeeeee
+
 let s:cursor_bg         = 0x6090b0
 let s:selection_bg      = 0xb0d0f0
 let s:status_line_bg    = 0x608090
 
 let s:statement_fg      = 0x0060b0
 let s:comment_fg        = s:Darken(s:normal_bg, 0x60)
-let s:constant_fg       = 0xb07000
+let s:constant_fg       = 0xb05000
 let s:special_fg        = 0x700090
 let s:identifier_fg     = 0x009020
 let s:preproc_fg        = 0x008080
