@@ -61,8 +61,8 @@ if !has("gui_running")
     endif
     set ttymouse=xterm2
 else
-    colorscheme lucius
-    LuciusLight
+    let g:airline_theme = "lucius"
+    colorscheme lucius24
 endif
 
 
