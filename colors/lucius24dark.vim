@@ -45,7 +45,7 @@ let s:normal_bg         = 0x182838
 
 let s:cursor_bg         = 0x6090b0
 let s:selection_bg      = 0xb0d0f0
-let s:status_line_bg    = 0x90b0c0
+let s:status_line_bg    = 0xa0b0c0
 
 let s:statement_fg      = 0x80d0e0
 let s:comment_fg        = s:Brighten(s:normal_bg, 0x60)
@@ -97,10 +97,10 @@ call s:Highlight("PmenuSbar", s:status_line_bg, s:Brighten(s:status_line_bg, 0x3
 call s:Highlight("PmenuThumb", s:Brighten(s:status_line_bg, 0x30), s:status_line_bg, "NONE")
 call s:Highlight("WildMenu", "NONE", s:selection_bg, "NONE")
 
-call s:Highlight("Error", 0xb00000, 0xe0b0b0, "NONE")
-call s:Highlight("ErrorMsg", 0xb00000, "NONE", "NONE")
-call s:Highlight("Todo", 0x906000, 0xf0f0b0, "NONE")
-call s:Highlight("WarningMsg", 0xb06000, "NONE", "NONE")
+call s:Highlight("Error", 0xf08080, 0x800000, "NONE")
+call s:Highlight("ErrorMsg", 0xf06060, "NONE", "NONE")
+call s:Highlight("Todo", 0xd0d060, 0x606000, "NONE")
+call s:Highlight("WarningMsg", 0xd08060, "NONE", "NONE")
 
 call s:Highlight("Conceal", s:comment_fg, "NONE", "NONE")
 call s:Highlight("Ignore", "bg", "NONE", "NONE")
