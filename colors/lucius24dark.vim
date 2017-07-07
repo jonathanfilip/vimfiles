@@ -39,7 +39,7 @@ function! s:Darken(hex_code, offset)
 endfunction
 
 
-let s:normal_fg         = 0xb8c8d8
+let s:normal_fg         = 0xc0d0e0
 let s:normal_bg         = 0x202838
 let s:normal_bg         = 0x182838
 
@@ -47,10 +47,10 @@ let s:cursor_bg         = 0x6090b0
 let s:selection_bg      = 0xb0d0f0
 let s:status_line_bg    = 0x90b0c0
 
-let s:statement_fg      = 0x80d0f0
+let s:statement_fg      = 0x80d0e0
 let s:comment_fg        = s:Brighten(s:normal_bg, 0x60)
-let s:constant_fg       = 0xd0d0b0
-let s:special_fg        = 0xc0b0d0
+let s:constant_fg       = 0xc0c0a0
+let s:special_fg        = 0xa0a0e0
 let s:identifier_fg     = 0xa0c090
 let s:preproc_fg        = 0x80d0b0
 let s:type_fg           = 0x80d0d0

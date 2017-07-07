@@ -42,17 +42,18 @@ if exists("+breakindent")
 endif
 
 " GUI/terminal and colors
+let g:airline_theme = "lucius"
 if !has("gui_running")
     if has("termguicolors")
         if &term == "screen-256color"
             set term=xterm-256color
         endif
         set termguicolors
-        let g:airline_theme = "lucius"
         colorscheme lucius24
         " TODO Remove these when done
         map <F2> :colorscheme lucius<CR>
         map <F3> :colorscheme lucius24<CR>
+        map <F4> :colorscheme lucius24dark<CR>
     else
         set t_Co=256
         set term=xterm-256color
@@ -63,6 +64,9 @@ if !has("gui_running")
 else
     let g:airline_theme = "lucius"
     colorscheme lucius24
+    map <F2> :colorscheme lucius<CR>
+    map <F3> :colorscheme lucius24<CR>
+    map <F4> :colorscheme lucius24dark<CR>
 endif
 
 
