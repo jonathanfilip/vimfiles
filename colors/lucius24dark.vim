@@ -44,7 +44,7 @@ let s:normal_bg         = 0x202838
 let s:normal_bg         = 0x182838
 
 let s:cursor_bg         = 0x6090b0
-let s:selection_bg      = 0xb0d0f0
+let s:selection_bg      = 0x006080
 let s:status_line_bg    = 0xa0b0c0
 
 let s:statement_fg      = 0x80d0e0
@@ -79,14 +79,14 @@ call s:Highlight("TabLineSel", "NONE", s:selection_bg, "NONE")
 call s:Highlight("TabLineFill", s:Darken(s:status_line_bg, 0x40), s:status_line_bg, "NONE")
 
 call s:Highlight("Cursor", "bg", s:cursor_bg, "NONE") 
-call s:Highlight("CursorLine", "NONE", s:Brighten(s:normal_bg, 0x10), "NONE")
-call s:Highlight("CursorColumn", "NONE", s:Brighten(s:normal_bg, 0x10), "NONE")
+call s:Highlight("CursorLine", "NONE", s:Brighten(s:normal_bg, 0x20), "NONE")
+call s:Highlight("CursorColumn", "NONE", s:Brighten(s:normal_bg, 0x20), "NONE")
 
-call s:Highlight("LineNr", s:comment_fg, s:Brighten(s:normal_bg, 0x10), "bold")
-call s:Highlight("CursorLineNr", s:status_line_bg, s:Brighten(s:normal_bg, 0x10), "bold")
+call s:Highlight("LineNr", s:comment_fg, s:Brighten(s:normal_bg, 0x20), "bold")
+call s:Highlight("CursorLineNr", s:status_line_bg, s:Brighten(s:normal_bg, 0x20), "bold")
 
 call s:Highlight("ColorColumn", "NONE", s:Brighten(s:normal_bg, 0x05), "NONE")
-call s:Highlight("SignColumn", s:Brighten(s:normal_bg, 0x80), s:Brighten(s:normal_bg, 0x20), "NONE")
+call s:Highlight("SignColumn", s:Brighten(s:normal_bg, 0x80), s:Brighten(s:normal_bg, 0x30), "NONE")
 
 call s:Highlight("Visual", "NONE", s:selection_bg, "NONE")
 call s:Highlight("VisualNOS", "fg", "NONE", "underline")
@@ -100,33 +100,34 @@ call s:Highlight("WildMenu", "NONE", s:selection_bg, "NONE")
 call s:Highlight("Error", 0xf08080, 0x800000, "NONE")
 call s:Highlight("ErrorMsg", 0xf06060, "NONE", "NONE")
 call s:Highlight("Todo", 0xd0d060, 0x606000, "NONE")
-call s:Highlight("WarningMsg", 0xd08060, "NONE", "NONE")
+call s:Highlight("WarningMsg", 0xc09060, "NONE", "NONE")
 
 call s:Highlight("Conceal", s:comment_fg, "NONE", "NONE")
 call s:Highlight("Ignore", "bg", "NONE", "NONE")
-call s:Highlight("NonText", 0xa0a0d0, "NONE", "NONE")
-call s:Highlight("SpecialKey", 0xa0d0a0, "NONE", "NONE")
+call s:Highlight("NonText", 0x606080, "NONE", "NONE")
+call s:Highlight("SpecialKey", 0x608060, "NONE", "NONE")
 
-call s:Highlight("Directory", 0x009060, "NONE", "NONE")
-call s:Highlight("ModeMsg", 0x0060b0, "NONE", "NONE")
-call s:Highlight("MoreMsg", 0x0060b0, "NONE", "NONE")
+call s:Highlight("Directory", s:identifier_fg, "NONE", "NONE")
+call s:Highlight("ModeMsg", s:statement_fg, "NONE", "NONE")
+call s:Highlight("MoreMsg", s:statement_fg, "NONE", "NONE")
 call s:Highlight("Question", s:normal_fg, "NONE", "NONE")
 call s:Highlight("Title", s:statement_fg, "NONE", "bold")
 call s:Highlight("Underlined", "fg", "NONE", "NONE")
 
-call s:Highlight("IncSearch", "fg", 0x60e0e0, "NONE")
-call s:Highlight("MatchParen", "NONE", 0x80e0c0, "NONE")
-call s:Highlight("Search", "fg", 0xf0b000, "NONE")
+call s:Highlight("IncSearch", "fg", 0x30b0b0, "NONE")
+call s:Highlight("IncSearch", "fg", 0x30b0b0, "NONE")
+call s:Highlight("MatchParen", "NONE", 0x70a000, "NONE")
+call s:Highlight("Search", "fg", 0xc07000, "NONE")
 
-call s:Highlight("DiffAdd", "fg", 0xa0d0a0, "NONE")
-call s:Highlight("DiffChange", "fg", 0xd0d0a0, "NONE")
-call s:Highlight("DiffDelete", "fg", 0xd0a0a0, "NONE")
-call s:Highlight("DiffText", 0xe06000, 0xd0d0a0, "bold")
+call s:Highlight("DiffAdd", "fg", 0x608060, "NONE")
+call s:Highlight("DiffChange", "fg", 0x808060, "NONE")
+call s:Highlight("DiffDelete", "fg", 0x806060, "NONE")
+call s:Highlight("DiffText", 0xe0e070, 0x808060, "NONE")
 
 
 " Not going to bother with custom functions for these
-hi SpellBad       gui=undercurl guisp=#c00000
-hi SpellCap       gui=undercurl guisp=#0090c0
+hi SpellBad       gui=undercurl guisp=#f06060
+hi SpellCap       gui=undercurl guisp=#60b0d0
 hi SpellRare      gui=undercurl guisp=#409000
-hi SpellLocal     gui=undercurl guisp=#d08000
+hi SpellLocal     gui=undercurl guisp=#d0b060
 
