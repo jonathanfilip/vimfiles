@@ -415,6 +415,7 @@ let g:ale_linters = {
             \ }
 let g:ale_lint_on_enter = 1
 let g:ale_set_signs = 0
+let g:ale_python_flake8_options = "--ignore=E501"
 
 
 " Ctags: {{{2 ----------------------------------------------------------------
