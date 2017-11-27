@@ -44,29 +44,29 @@ endif
 " GUI/terminal and colors
 let g:airline_theme = "lucius"
 if !has("gui_running")
-    if has("termguicolors")
-        if &term == "screen-256color"
-            set term=xterm-256color
-        endif
-        set termguicolors
-        colorscheme lucius24
-        " TODO Remove these when done
-        map <F2> :colorscheme lucius<CR>
-        map <F3> :colorscheme lucius24<CR>
-        map <F4> :colorscheme lucius24dark<CR>
-    else
+    " if has("termguicolors")
+    "     if &term == "screen-256color"
+    "         set term=xterm-256color
+    "     endif
+    "     set termguicolors
+    "     colorscheme lucius24
+    "     " TODO Remove these when done
+    "     map <F2> :colorscheme lucius<CR>
+    "     map <F3> :colorscheme lucius24<CR>
+    "     map <F4> :colorscheme lucius24dark<CR>
+    " else
         set t_Co=256
         set term=xterm-256color
-        colorscheme lucius
-        LuciusLight
-    endif
+        " colorscheme lucius
+        " LuciusLight
+    " endif
     set ttymouse=xterm2
 else
-    let g:airline_theme = "lucius"
-    colorscheme lucius24
-    map <F2> :colorscheme lucius<CR>
-    map <F3> :colorscheme lucius24<CR>
-    map <F4> :colorscheme lucius24dark<CR>
+    " let g:airline_theme = "lucius"
+    " colorscheme lucius24
+    " map <F2> :colorscheme lucius<CR>
+    " map <F3> :colorscheme lucius24<CR>
+    " map <F4> :colorscheme lucius24dark<CR>
 endif
 
 
@@ -514,25 +514,6 @@ augroup python
 augroup end
 
 
-" Syntastic: {{{2 ------------------------------------------------------------
-
-" let g:syntastic_check_on_open = 0
-" let g:syntastic_echo_current_error = 1
-" let g:syntastic_enable_signs = 1
-" let g:syntastic_enable_balloons = 1
-" let g:syntastic_always_populate_loc_list = 1
-" let g:syntastic_enable_highlighting = 1
-" let g:syntastic_auto_loc_list = 1
-" let g:syntastic_mode_map = {
-"             \ "mode": "passive",
-"             \ "active_filetypes": [],
-"             \ "passive_filetypes": [] }
-" let g:syntastic_python_checkers = ["pyflakes", "pep8"]
-"
-" nnoremap <Leader>sc :SyntasticCheck<CR>
-" nnoremap <Leader>sr :SyntasticReset<CR>
-
-
 " WordMotion: {{{2 -----------------------------------------------------------
 
 let g:wordmotion_prefix='<leader>'
@@ -571,6 +552,10 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
   runtime! macros/matchit.vim
 endif
 
+" Colorscheme: {{{1 ==========================================================
+
+colorscheme lucius
+LuciusLight
 
 " Local Settings: {{{1 =======================================================
 
