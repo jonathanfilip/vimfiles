@@ -241,14 +241,6 @@ nnoremap <Down> 10<C-W>-
 nnoremap <Left> 10<C-W><
 nnoremap <Right> 10<C-W>>
 
-" Transpose and indent lines
-nnoremap <silent> <S-Up> :move-2<CR>==
-nnoremap <silent> <S-Down> :move+<CR>==
-inoremap <silent> <S-Up> <Esc>:move-2<CR>==gi
-inoremap <silent> <S-Down> <Esc>:move+<CR>==gi
-vnoremap <silent> <S-Up> :move'<-2<CR>gv=gv
-vnoremap <silent> <S-Down> :move'>+<CR>gv=gv
-
 " Splitting
 nnoremap <leader>sp :split<CR>
 nnoremap <leader>vs :vsplit<CR>
@@ -282,15 +274,6 @@ inoremap <4-MiddleMouse> <Nop>
 
 " Get rid of Ex mode
 nnoremap <S-Q> <Q>
-
-" Wrap a word in quotes
-nnoremap <silent> <leader>q' ciw'<C-R><C-O>"'<Esc>
-nnoremap <silent> <leader>q" ciw"<C-R><C-O>""<Esc>
-nnoremap <silent> <leader>q" ciw"<C-R><C-O>""<Esc>
-nnoremap <silent> <leader>q( ciw(<C-R><C-O>")<Esc>
-nnoremap <silent> <leader>q[ ciw[<C-R><C-O>"]<Esc>
-nnoremap <silent> <leader>q{ ciw{<C-R><C-O>"}<Esc>
-nnoremap <silent> <leader>q< ciw<<C-R><C-O>"><Esc>
 
 " Preview tag on Enter
 nnoremap <silent> <leader><CR> :ptjump <C-R>=expand("<cword>")<CR><CR>
@@ -334,9 +317,6 @@ endif
 
 " Commands: {{{1 =============================================================
 
-" Set window title
-command! -nargs=1 Title :set title titlestring=<args>
-
 " Strip extra whitespace
 command! Strip %s/\s\+$//
 
@@ -350,12 +330,6 @@ command! Qa qa
 command! W w
 command! Wq wq
 command! WQ wq
-
-" Jump to the next diff and obtain it (repeat with @@, followed by @:)
-command! -nargs=0 Fix :normal! ]cdo<CR>
-
-" Find TODO, XXX, etc.
-command! -nargs=0 Todo :lvimgrep /\#\s*\(XXX\|TODO\|NOTE\)/ %<CR>
 
 
 " Plugins: {{{1 ==============================================================
@@ -373,7 +347,6 @@ Plug 'hdima/python-syntax'
 Plug 'hynek/vim-python-pep8-indent'
 Plug 'jonathanfilip/vim-dbext'
 Plug 'jonathanfilip/vim-lucius'
-Plug 'mhinz/vim-grepper'
 Plug 'othree/xml.vim'
 Plug 'tomtom/tcomment_vim'
 Plug 'tpope/vim-fugitive'
@@ -381,7 +354,6 @@ Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
 Plug 'vim-pandoc/vim-pandoc'
 Plug 'vim-pandoc/vim-pandoc-syntax'
-Plug 'wellle/targets.vim'
 Plug 'will133/vim-dirdiff'
 Plug 'w0rp/ale'
 
