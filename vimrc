@@ -44,31 +44,13 @@ endif
 " GUI/terminal and colors
 let g:airline_theme = "lucius"
 if !has("gui_running")
-    " if has("termguicolors")
-    "     if &term == "screen-256color"
-    "         set term=xterm-256color
-    "     endif
-    "     set termguicolors
-    "     colorscheme lucius24
-    "     " TODO Remove these when done
-    "     map <F2> :colorscheme lucius<CR>
-    "     map <F3> :colorscheme lucius24<CR>
-    "     map <F4> :colorscheme lucius24dark<CR>
-    " else
-        set t_Co=256
-        set term=xterm-256color
-        " colorscheme lucius
-        " LuciusLight
-    " endif
+    if has("termguicolors")
+        set termguicolors
+    endif
+    set t_Co=256
+    set term=xterm-256color
     set ttymouse=xterm2
-else
-    " let g:airline_theme = "lucius"
-    " colorscheme lucius24
-    " map <F2> :colorscheme lucius<CR>
-    " map <F3> :colorscheme lucius24<CR>
-    " map <F4> :colorscheme lucius24dark<CR>
 endif
-
 
 " Use system clipboard
 if has("clipboard")
@@ -347,6 +329,7 @@ Plug 'https://github.com/hdima/python-syntax'
 Plug 'https://github.com/hynek/vim-python-pep8-indent'
 Plug 'https://github.com/jonathanfilip/vim-dbext'
 Plug 'https://github.com/jonathanfilip/vim-lucius'
+Plug 'https://github.com/jonathanfilip/nord-vim'
 Plug 'https://github.com/othree/xml.vim'
 Plug 'https://github.com/tomtom/tcomment_vim'
 Plug 'https://github.com/tpope/vim-fugitive'
@@ -527,8 +510,11 @@ endif
 
 " Colorscheme: {{{1 ==========================================================
 
-colorscheme lucius
-LuciusLight
+colorscheme nord
+" colorscheme lucius
+" LuciusLight
+
+let g:nord_comment_brightness = 5
 
 " Local Settings: {{{1 =======================================================
 
