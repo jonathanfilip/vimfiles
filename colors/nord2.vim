@@ -63,11 +63,19 @@ let s:cursor_bg         = s:nord4
 let s:selection_bg      = s:nord2
 let s:border_bg         = s:nord1
 
+let s:identifier_fg     = s:nord8
+let s:statement_fg      = s:nord9
+let s:comment_fg        = s:nord3
+let s:status_line_bg    = s:nord3
+
+let s:base_ui           = s:nord3
+
 
 call s:Highlight("Normal", s:normal_fg, s:normal_bg, "NONE") 
 
 " Comment Highlighting
-call s:Highlight("Comment", s:Brighten(s:nord3, 0x20), "NONE", "NONE")
+" call s:Highlight("Comment", s:Brighten(s:normal_bg, 0x50), "NONE", "NONE")
+call s:Highlight("Comment", s:Brighten(s:nord3, 0x10), "NONE", "NONE")
 
 " Constant Highlighting
 call s:Highlight("Constant", s:nord14, "NONE", "NONE")
@@ -104,7 +112,7 @@ call s:Highlight("Structure", s:nord9, "NONE", "NONE")
 call s:Highlight("Typedef", s:nord9, "NONE", "NONE")
 
 " Special Highlighting
-call s:Highlight("Special", s:nord4, "NONE", "NONE")
+call s:Highlight("Special", s:nord13, "NONE", "NONE")
 call s:Highlight("SpecialChar", s:nord13, "NONE", "NONE")
 call s:Highlight("Tag", s:nord4, "NONE", "NONE")
 call s:Highlight("Delimiter", s:nord4, "NONE", "NONE")
@@ -113,70 +121,86 @@ call s:Highlight("Debug", s:nord4, "NONE", "NONE")
 
 
 " Border Highlighting
-call s:Highlight("StatusLine", s:nord8, s:nord3, "bold")
-call s:Highlight("StatusLineNC", s:Darken(s:status_line_bg, 0x60), s:status_line_bg, "NONE")
-call s:Highlight("VertSplit", s:Darken(s:status_line_bg, 0x60), s:status_line_bg, "NONE")
+call s:Highlight("StatusLine", s:nord8, s:base_ui, "NONE")
+call s:Highlight("StatusLineNC", s:Darken(s:nord8, 0x20), s:base_ui, "NONE")
+call s:Highlight("VertSplit", s:Darken(s:nord8, 0x40), s:base_ui, "NONE")
+call s:Highlight("StatusLineTerm", s:nord8, s:base_ui, "NONE")
+call s:Highlight("StatusLineTermNC", s:Darken(s:nord8, 0x20), s:base_ui, "NONE")
+
+call s:Highlight("TabLine", s:normal_bg, s:base_ui, "NONE")
+call s:Highlight("TabLineSel", "NONE", s:selection_bg, "NONE")
+call s:Highlight("TabLineFill", s:Darken(s:base_ui, 0x40), s:base_ui, "NONE")
+
+call s:Highlight("Folded", s:Brighten(s:base_ui, 0x60), s:Brighten(s:base_ui, 0x10), "bold")
+call s:Highlight("FoldColumn", s:Brighten(s:base_ui, 0x60), s:Brighten(s:base_ui, 0x10), "bold")
+
+call s:Highlight("LineNr", s:Brighten(s:base_ui, 0x40), s:Darken(s:base_ui, 0x10), "bold")
+call s:Highlight("CursorLineNr", s:Brighten(s:base_ui, 0x70), s:Darken(s:base_ui, 0x10), "bold")
+
+call s:Highlight("ColorColumn", "NONE", s:Brighten(s:normal_bg, 0x08), "NONE")
+call s:Highlight("SignColumn", s:Brighten(s:base_ui, 0x40), s:Brighten(s:base_ui, 0x10), "NONE")
+
+
+" Cursor Highlighting
+
+call s:Highlight("Cursor", "bg", s:normal_fg, "NONE") 
+call s:Highlight("CursorLine", "NONE", s:Darken(s:base_ui, 0x10), "NONE")
+call s:Highlight("CursorColumn", "NONE", s:Darken(s:base_ui, 0x10), "NONE")
+
+call s:Highlight("Visual", "NONE", s:Brighten(s:selection_bg, 0x08), "NONE")
+call s:Highlight("VisualNOS", "fg", "NONE", "underline")
+
+
+" Completion Highlighting
+
+call s:Highlight("Pmenu", "fg", s:base_ui, "NONE")
+call s:Highlight("PmenuSel", "NONE", s:nord8, "NONE")
+call s:Highlight("PmenuSbar", s:base_ui, s:Brighten(s:base_ui, 0x30), "NONE")
+call s:Highlight("PmenuThumb", s:Brighten(s:base_ui, 0x30), s:base_ui, "NONE")
+call s:Highlight("WildMenu", "NONE", s:nord8, "NONE")
+
 
 " Syntax Highlighting
 
+call s:Highlight("Error", s:Brighten(s:nord11, 0x20), s:Darken(s:nord11, 0x50), "NONE")
+call s:Highlight("Todo", s:Brighten(s:nord13, 0x10), s:Darken(s:nord13, 0x60), "NONE")
+call s:Highlight("ErrorMsg", s:nord11, "NONE", "NONE")
+call s:Highlight("WarningMsg", s:nord13, "NONE", "NONE")
 
-call s:Highlight("Folded", s:status_line_bg, s:Darken(s:status_line_bg, 0x40), "bold")
-call s:Highlight("FoldColumn", s:status_line_bg, s:Darken(s:status_line_bg, 0x40), "bold")
 
-call s:Highlight("TabLine", s:normal_bg, s:status_line_bg, "NONE")
-call s:Highlight("TabLineSel", "NONE", s:selection_bg, "NONE")
-call s:Highlight("TabLineFill", s:Darken(s:status_line_bg, 0x40), s:status_line_bg, "NONE")
+" Diff Highlighting
 
-call s:Highlight("Cursor", "bg", s:cursor_bg, "NONE") 
-call s:Highlight("CursorLine", "NONE", s:Brighten(s:normal_bg, 0x20), "NONE")
-call s:Highlight("CursorColumn", "NONE", s:Brighten(s:normal_bg, 0x20), "NONE")
+call s:Highlight("DiffAdd", "fg", s:Darken(s:nord14, 0x60), "NONE")
+call s:Highlight("DiffChange", "fg", s:Darken(s:nord13, 0x70), "NONE")
+call s:Highlight("DiffDelete", "fg", s:Darken(s:nord11, 0x50), "NONE")
+call s:Highlight("DiffText", s:Brighten(s:nord13, 0x40), s:Darken(s:nord13, 0x70), "NONE")
 
-call s:Highlight("LineNr", s:comment_fg, s:Brighten(s:normal_bg, 0x20), "bold")
-call s:Highlight("CursorLineNr", s:status_line_bg, s:Brighten(s:normal_bg, 0x20), "bold")
 
-call s:Highlight("ColorColumn", "NONE", s:Brighten(s:normal_bg, 0x05), "NONE")
-call s:Highlight("SignColumn", s:Brighten(s:normal_bg, 0x80), s:Brighten(s:normal_bg, 0x30), "NONE")
+" Search Highlighting
 
-call s:Highlight("Visual", "NONE", s:selection_bg, "NONE")
-call s:Highlight("VisualNOS", "fg", "NONE", "underline")
+call s:Highlight("IncSearch", "bg", s:nord8, "NONE")
+call s:Highlight("MatchParen", "NONE", s:nord3, "NONE")
+call s:Highlight("Search", "bg", s:nord12, "NONE")
 
-call s:Highlight("Pmenu", "bg", s:status_line_bg, "NONE")
-call s:Highlight("PmenuSel", "NONE", s:selection_bg, "NONE")
-call s:Highlight("PmenuSbar", s:status_line_bg, s:Brighten(s:status_line_bg, 0x30), "NONE")
-call s:Highlight("PmenuThumb", s:Brighten(s:status_line_bg, 0x30), s:status_line_bg, "NONE")
-call s:Highlight("WildMenu", "NONE", s:selection_bg, "NONE")
 
-call s:Highlight("Error", 0xf08080, 0x800000, "NONE")
-call s:Highlight("ErrorMsg", 0xf06060, "NONE", "NONE")
-call s:Highlight("Todo", 0xd0d060, 0x606000, "NONE")
-call s:Highlight("WarningMsg", 0xc09060, "NONE", "NONE")
+" Misc Highlighting
 
 call s:Highlight("Conceal", s:comment_fg, "NONE", "NONE")
 call s:Highlight("Ignore", "bg", "NONE", "NONE")
-call s:Highlight("NonText", 0x606080, "NONE", "NONE")
-call s:Highlight("SpecialKey", 0x608060, "NONE", "NONE")
+call s:Highlight("NonText", s:nord2, "NONE", "NONE")
+call s:Highlight("SpecialKey", s:nord3, "NONE", "NONE")
 
 call s:Highlight("Directory", s:identifier_fg, "NONE", "NONE")
 call s:Highlight("ModeMsg", s:statement_fg, "NONE", "NONE")
 call s:Highlight("MoreMsg", s:statement_fg, "NONE", "NONE")
 call s:Highlight("Question", s:normal_fg, "NONE", "NONE")
-call s:Highlight("Title", s:statement_fg, "NONE", "bold")
+call s:Highlight("Title", s:nord8, "NONE", "bold")
 call s:Highlight("Underlined", "fg", "NONE", "NONE")
 
-call s:Highlight("IncSearch", "fg", 0x30b0b0, "NONE")
-call s:Highlight("IncSearch", "fg", 0x30b0b0, "NONE")
-call s:Highlight("MatchParen", "NONE", 0x70a000, "NONE")
-call s:Highlight("Search", "fg", 0xc07000, "NONE")
 
-call s:Highlight("DiffAdd", "fg", 0x608060, "NONE")
-call s:Highlight("DiffChange", "fg", 0x808060, "NONE")
-call s:Highlight("DiffDelete", "fg", 0x806060, "NONE")
-call s:Highlight("DiffText", 0xe0e070, 0x808060, "NONE")
+" Spelling Highlighting
 
-
-" Not going to bother with custom functions for these
-hi SpellBad       gui=undercurl guisp=#f06060
-hi SpellCap       gui=undercurl guisp=#60b0d0
-hi SpellRare      gui=undercurl guisp=#409000
-hi SpellLocal     gui=undercurl guisp=#d0b060
-
+exec "hi SpellBad gui=undercurl guisp=#" . printf("%06x", s:nord11)
+exec "hi SpellCap gui=undercurl guisp=#" . printf("%06x", s:nord13)
+exec "hi SpellRare gui=undercurl guisp=#" . printf("%06x", s:nord15)
+exec "hi SpellLocal gui=undercurl guisp=#" . printf("%06x", s:nord14)

@@ -42,7 +42,7 @@ if exists("+breakindent")
 endif
 
 " GUI/terminal and colors
-let g:airline_theme = "lucius"
+let g:airline_theme = "nord"
 if !has("gui_running")
     if has("termguicolors")
         set termguicolors
@@ -358,9 +358,9 @@ let g:airline_symbols_ascii = 1
 
 let g:airline_extensions = ['ctrlp']
 let g:airline#extensions#default#layout = [
-    \ [ 'a', 'c' ],
-    \ [ 'x', 'y', 'z', 'error', 'warning' ]
-    \ ]
+            \ [ 'a', 'c' ],
+            \ [ 'x', 'y', 'z', 'error', 'warning' ]
+            \ ]
 
 
 " ALE: {{{2 ------------------------------------------------------------------
@@ -505,12 +505,12 @@ augroup end
 
 " Load matchit.vim, but only if the user hasn't installed a newer version.
 if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
-  runtime! macros/matchit.vim
+    runtime! macros/matchit.vim
 endif
 
 " Colorscheme: {{{1 ==========================================================
 
-colorscheme nord
+colorscheme nord2
 " colorscheme lucius
 " LuciusLight
 
@@ -523,4 +523,3 @@ if filereadable(expand("~/.vimrc.local"))
 endif
 
 " vim: nofoldenable foldmethod=marker
-
