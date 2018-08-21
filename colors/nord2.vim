@@ -127,12 +127,12 @@ call s:Highlight("VertSplit", s:Darken(s:nord8, 0x40), s:base_ui, "NONE")
 call s:Highlight("StatusLineTerm", s:nord8, s:base_ui, "NONE")
 call s:Highlight("StatusLineTermNC", s:Darken(s:nord8, 0x20), s:base_ui, "NONE")
 
-call s:Highlight("TabLine", s:normal_bg, s:base_ui, "NONE")
-call s:Highlight("TabLineSel", "NONE", s:selection_bg, "NONE")
-call s:Highlight("TabLineFill", s:Darken(s:base_ui, 0x40), s:base_ui, "NONE")
+call s:Highlight("TabLine", s:normal_fg, s:base_ui, "NONE")
+call s:Highlight("TabLineSel", "NONE", s:nord10, "NONE")
+call s:Highlight("TabLineFill", s:Darken(s:normal_fg, 0x30), s:base_ui, "NONE")
 
-call s:Highlight("Folded", s:Brighten(s:base_ui, 0x60), s:Brighten(s:base_ui, 0x10), "bold")
-call s:Highlight("FoldColumn", s:Brighten(s:base_ui, 0x60), s:Brighten(s:base_ui, 0x10), "bold")
+call s:Highlight("Folded", s:Brighten(s:base_ui, 0x60), s:Brighten(s:base_ui, 0x00), "bold")
+call s:Highlight("FoldColumn", s:Brighten(s:base_ui, 0x60), s:Brighten(s:base_ui, 0x00), "bold")
 
 call s:Highlight("LineNr", s:Brighten(s:base_ui, 0x40), s:Darken(s:base_ui, 0x10), "bold")
 call s:Highlight("CursorLineNr", s:Brighten(s:base_ui, 0x70), s:Darken(s:base_ui, 0x10), "bold")
@@ -154,10 +154,10 @@ call s:Highlight("VisualNOS", "fg", "NONE", "underline")
 " Completion Highlighting
 
 call s:Highlight("Pmenu", "fg", s:base_ui, "NONE")
-call s:Highlight("PmenuSel", "NONE", s:nord8, "NONE")
+call s:Highlight("PmenuSel", "NONE", s:nord10, "NONE")
 call s:Highlight("PmenuSbar", s:base_ui, s:Brighten(s:base_ui, 0x30), "NONE")
 call s:Highlight("PmenuThumb", s:Brighten(s:base_ui, 0x30), s:base_ui, "NONE")
-call s:Highlight("WildMenu", "NONE", s:nord8, "NONE")
+call s:Highlight("WildMenu", "NONE", s:nord10, "NONE")
 
 
 " Syntax Highlighting
@@ -179,7 +179,7 @@ call s:Highlight("DiffText", s:Brighten(s:nord13, 0x40), s:Darken(s:nord13, 0x70
 " Search Highlighting
 
 call s:Highlight("IncSearch", "bg", s:nord8, "NONE")
-call s:Highlight("MatchParen", "NONE", s:nord3, "NONE")
+call s:Highlight("MatchParen", s:normal_bg, s:nord7, "NONE")
 call s:Highlight("Search", "bg", s:nord12, "NONE")
 
 
@@ -190,7 +190,7 @@ call s:Highlight("Ignore", "bg", "NONE", "NONE")
 call s:Highlight("NonText", s:nord2, "NONE", "NONE")
 call s:Highlight("SpecialKey", s:nord3, "NONE", "NONE")
 
-call s:Highlight("Directory", s:identifier_fg, "NONE", "NONE")
+call s:Highlight("Directory", s:nord14, "NONE", "NONE")
 call s:Highlight("ModeMsg", s:statement_fg, "NONE", "NONE")
 call s:Highlight("MoreMsg", s:statement_fg, "NONE", "NONE")
 call s:Highlight("Question", s:normal_fg, "NONE", "NONE")
