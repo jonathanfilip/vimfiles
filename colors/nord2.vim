@@ -23,20 +23,12 @@ function! s:Highlight(group, fg, bg, opt)
     exec l:cmd
 endfunction
 
-function! s:Brighten(hex_code, offset)
-    let l:red = min([0xff, a:hex_code % 0x1000000 / 0x10000 + a:offset])
-    let l:green = min([0xff, a:hex_code % 0x10000 / 0x100 + a:offset])
-    let l:blue = min([0xff, a:hex_code % 0x100 + a:offset])
+function! s:Adjust(hex_code, factor)
+    let l:red = min([0xff, float2nr(round(a:hex_code % 0x1000000 / 0x10000 * (1 + a:factor)))])
+    let l:green = min([0xff, float2nr(round(a:hex_code % 0x10000 / 0x100 * (1 + a:factor)))])
+    let l:blue = min([0xff, float2nr(round(a:hex_code % 0x100 * (1 + a:factor)))])
     return 0x10000 * l:red + 0x100 * l:green + l:blue
 endfunction
-
-function! s:Darken(hex_code, offset)
-    let l:red = max([0x00, a:hex_code % 0x1000000 / 0x10000 - a:offset])
-    let l:green = max([0x00, a:hex_code % 0x10000 / 0x100 - a:offset])
-    let l:blue = max([0x00, a:hex_code % 0x100 - a:offset])
-    return 0x10000 * l:red + 0x100 * l:green + l:blue
-endfunction
-
 
 let s:nord0  = 0x2e3440
 let s:nord1  = 0x3b4252
@@ -55,12 +47,17 @@ let s:nord13 = 0xebcb8b
 let s:nord14 = 0xa3be8c
 let s:nord15 = 0xb48ead
 
+let s:red               = s:nord11
+let s:orange            = s:nord12
+let s:yellow            = s:nord13
+let s:green             = s:nord14
+let s:purple            = s:nord15
 
 let s:normal_fg         = s:nord4
 let s:normal_bg         = s:nord0
 
 let s:cursor_bg         = s:nord4
-let s:selection_bg      = s:nord2
+let s:selection_bg      = s:Adjust(s:nord2, 0.0)
 let s:border_bg         = s:nord1
 
 let s:identifier_fg     = s:nord8
@@ -69,13 +66,15 @@ let s:comment_fg        = s:nord3
 let s:status_line_bg    = s:nord3
 
 let s:base_ui           = s:nord3
+let s:border_bg         = s:Adjust(s:normal_bg, 2.0)
+let s:border_fg         = s:normal_bg
+let s:focused_bg        = s:nord10
 
 
 call s:Highlight("Normal", s:normal_fg, s:normal_bg, "NONE") 
 
 " Comment Highlighting
-" call s:Highlight("Comment", s:Brighten(s:normal_bg, 0x50), "NONE", "NONE")
-call s:Highlight("Comment", s:Brighten(s:nord3, 0x10), "NONE", "NONE")
+call s:Highlight("Comment", s:Adjust(s:normal_bg, 1.10), "NONE", "NONE")
 
 " Constant Highlighting
 call s:Highlight("Constant", s:nord14, "NONE", "NONE")
@@ -121,66 +120,66 @@ call s:Highlight("Debug", s:nord4, "NONE", "NONE")
 
 
 " Border Highlighting
-call s:Highlight("StatusLine", s:nord8, s:base_ui, "NONE")
-call s:Highlight("StatusLineNC", s:Darken(s:nord8, 0x20), s:base_ui, "NONE")
-call s:Highlight("VertSplit", s:Darken(s:nord8, 0x40), s:base_ui, "NONE")
-call s:Highlight("StatusLineTerm", s:nord8, s:base_ui, "NONE")
-call s:Highlight("StatusLineTermNC", s:Darken(s:nord8, 0x20), s:base_ui, "NONE")
+call s:Highlight("StatusLine", s:border_fg, s:border_bg, "NONE")
+call s:Highlight("StatusLineNC", s:Adjust(s:border_fg, 1.0), s:border_bg, "NONE")
+call s:Highlight("VertSplit", s:Adjust(s:border_fg, 1.0), s:border_bg, "NONE")
+call s:Highlight("StatusLineTerm", s:border_fg, s:border_bg, "NONE")
+call s:Highlight("StatusLineTermNC", s:Adjust(s:border_fg, 1.0), s:border_bg, "NONE")
 
-call s:Highlight("TabLine", s:normal_fg, s:base_ui, "NONE")
-call s:Highlight("TabLineSel", "NONE", s:nord10, "NONE")
-call s:Highlight("TabLineFill", s:Darken(s:normal_fg, 0x30), s:base_ui, "NONE")
+call s:Highlight("TabLine", s:border_fg, s:border_bg, "NONE")
+call s:Highlight("TabLineSel", s:normal_fg, s:focused_bg, "NONE")
+call s:Highlight("TabLineFill", s:Adjust(s:border_fg, 1.0), s:border_bg, "NONE")
 
-call s:Highlight("Folded", s:Brighten(s:base_ui, 0x60), s:Brighten(s:base_ui, 0x00), "bold")
-call s:Highlight("FoldColumn", s:Brighten(s:base_ui, 0x60), s:Brighten(s:base_ui, 0x00), "bold")
+call s:Highlight("Folded", s:Adjust(s:normal_bg, 3.0), s:Adjust(s:normal_bg, 1.0), "NONE")
+call s:Highlight("FoldColumn", s:Adjust(s:normal_bg, 3.0), s:Adjust(s:normal_bg, 1.0), "NONE")
 
-call s:Highlight("LineNr", s:Brighten(s:base_ui, 0x40), s:Darken(s:base_ui, 0x10), "bold")
-call s:Highlight("CursorLineNr", s:Brighten(s:base_ui, 0x70), s:Darken(s:base_ui, 0x10), "bold")
+call s:Highlight("LineNr", s:Adjust(s:normal_bg, 1.0), s:Adjust(s:normal_bg, 0.5), "NONE")
+call s:Highlight("CursorLineNr", s:Adjust(s:normal_bg, 3.0), s:Adjust(s:normal_bg, 0.5), "NONE")
 
-call s:Highlight("ColorColumn", "NONE", s:Brighten(s:normal_bg, 0x08), "NONE")
-call s:Highlight("SignColumn", s:Brighten(s:base_ui, 0x40), s:Brighten(s:base_ui, 0x10), "NONE")
+call s:Highlight("ColorColumn", "NONE", s:Adjust(s:normal_bg, 0.2), "NONE")
+call s:Highlight("SignColumn", s:Adjust(s:normal_bg, 1.0), s:Adjust(s:normal_bg, 0.5), "NONE")
 
 
 " Cursor Highlighting
 
 call s:Highlight("Cursor", "bg", s:normal_fg, "NONE") 
-call s:Highlight("CursorLine", "NONE", s:Darken(s:base_ui, 0x10), "NONE")
-call s:Highlight("CursorColumn", "NONE", s:Darken(s:base_ui, 0x10), "NONE")
+call s:Highlight("CursorLine", "NONE", s:Adjust(s:normal_bg, 0.5), "NONE")
+call s:Highlight("CursorColumn", "NONE", s:Adjust(s:normal_bg, 0.5), "NONE")
 
-call s:Highlight("Visual", "NONE", s:Brighten(s:selection_bg, 0x08), "NONE")
+call s:Highlight("Visual", "NONE", s:selection_bg, "NONE")
 call s:Highlight("VisualNOS", "fg", "NONE", "underline")
 
 
 " Completion Highlighting
 
-call s:Highlight("Pmenu", "fg", s:base_ui, "NONE")
-call s:Highlight("PmenuSel", "NONE", s:nord10, "NONE")
-call s:Highlight("PmenuSbar", s:base_ui, s:Brighten(s:base_ui, 0x30), "NONE")
-call s:Highlight("PmenuThumb", s:Brighten(s:base_ui, 0x30), s:base_ui, "NONE")
-call s:Highlight("WildMenu", "NONE", s:nord10, "NONE")
+call s:Highlight("Pmenu", s:normal_bg, s:border_bg, "NONE")
+call s:Highlight("PmenuSel", s:normal_fg, s:focused_bg, "NONE")
+call s:Highlight("PmenuSbar", s:border_bg, s:Adjust(s:border_bg, 0.2), "NONE")
+call s:Highlight("PmenuThumb", s:normal_fg, s:Adjust(s:border_bg, -0.2), "NONE")
+call s:Highlight("WildMenu", s:normal_fg, s:focused_bg, "NONE")
 
 
 " Syntax Highlighting
 
-call s:Highlight("Error", s:Brighten(s:nord11, 0x20), s:Darken(s:nord11, 0x50), "NONE")
-call s:Highlight("Todo", s:Brighten(s:nord13, 0x10), s:Darken(s:nord13, 0x60), "NONE")
-call s:Highlight("ErrorMsg", s:nord11, "NONE", "NONE")
-call s:Highlight("WarningMsg", s:nord13, "NONE", "NONE")
+call s:Highlight("Error", s:Adjust(s:red, 0.2), s:Adjust(s:red, -0.5), "NONE")
+call s:Highlight("Todo", s:Adjust(s:yellow, 0.1), s:Adjust(s:yellow, -0.6), "NONE")
+call s:Highlight("ErrorMsg", s:red, "NONE", "NONE")
+call s:Highlight("WarningMsg", s:yellow, "NONE", "NONE")
 
 
 " Diff Highlighting
 
-call s:Highlight("DiffAdd", "fg", s:Darken(s:nord14, 0x60), "NONE")
-call s:Highlight("DiffChange", "fg", s:Darken(s:nord13, 0x70), "NONE")
-call s:Highlight("DiffDelete", "fg", s:Darken(s:nord11, 0x50), "NONE")
-call s:Highlight("DiffText", s:Brighten(s:nord13, 0x40), s:Darken(s:nord13, 0x70), "NONE")
+call s:Highlight("DiffAdd", "fg", s:Adjust(s:green, -0.4), "NONE")
+call s:Highlight("DiffChange", "fg", s:Adjust(s:yellow, -0.5), "NONE")
+call s:Highlight("DiffDelete", "fg", s:Adjust(s:red, -0.5), "NONE")
+call s:Highlight("DiffText", s:Adjust(s:yellow, 0.4), s:Adjust(s:yellow, -0.5), "NONE")
 
 
 " Search Highlighting
 
 call s:Highlight("IncSearch", "bg", s:nord8, "NONE")
 call s:Highlight("MatchParen", s:normal_bg, s:nord7, "NONE")
-call s:Highlight("Search", "bg", s:nord12, "NONE")
+call s:Highlight("Search", "bg", s:orange, "NONE")
 
 
 " Misc Highlighting
@@ -200,7 +199,14 @@ call s:Highlight("Underlined", "fg", "NONE", "NONE")
 
 " Spelling Highlighting
 
-exec "hi SpellBad gui=undercurl guisp=#" . printf("%06x", s:nord11)
-exec "hi SpellCap gui=undercurl guisp=#" . printf("%06x", s:nord13)
-exec "hi SpellRare gui=undercurl guisp=#" . printf("%06x", s:nord15)
-exec "hi SpellLocal gui=undercurl guisp=#" . printf("%06x", s:nord14)
+let s:spell_hi = "guibg"
+let s:spell_factor = -0.3
+if has("gui")
+    s:spell_hi = "guisp"
+    s:spell_factor = 0.0
+endif
+exec "hi SpellBad gui=undercurl " . s:spell_hi . "=#" . printf("%06x", s:Adjust(s:red, s:spell_factor))
+exec "hi SpellCap gui=undercurl " . s:spell_hi . "=#" . printf("%06x", s:Adjust(s:yellow, s:spell_factor))
+exec "hi SpellRare gui=undercurl " . s:spell_hi . "=#" . printf("%06x", s:Adjust(s:purple, s:spell_factor))
+exec "hi SpellLocal gui=undercurl " . s:spell_hi . "=#" . printf("%06x", s:Adjust(s:green, s:spell_factor))
+
