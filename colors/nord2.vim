@@ -201,7 +201,7 @@ call s:Highlight("Underlined", "fg", "NONE", "NONE")
 
 let s:spell_hi = "guibg"
 let s:spell_factor = -0.3
-if has("gui")
+if has("gui_running")
     s:spell_hi = "guisp"
     s:spell_factor = 0.0
 endif
