@@ -121,14 +121,14 @@ call s:Highlight("Debug", s:nord4, "NONE", "NONE")
 
 " Border Highlighting
 call s:Highlight("StatusLine", s:border_fg, s:border_bg, "NONE")
-call s:Highlight("StatusLineNC", s:Adjust(s:border_fg, 1.0), s:border_bg, "NONE")
-call s:Highlight("VertSplit", s:Adjust(s:border_fg, 1.0), s:border_bg, "NONE")
+call s:Highlight("StatusLineNC", s:Adjust(s:border_fg, 0.6), s:border_bg, "NONE")
+call s:Highlight("VertSplit", s:Adjust(s:border_fg, 0.6), s:border_bg, "NONE")
 call s:Highlight("StatusLineTerm", s:border_fg, s:border_bg, "NONE")
-call s:Highlight("StatusLineTermNC", s:Adjust(s:border_fg, 1.0), s:border_bg, "NONE")
+call s:Highlight("StatusLineTermNC", s:Adjust(s:border_fg, 0.6), s:border_bg, "NONE")
 
 call s:Highlight("TabLine", s:border_fg, s:border_bg, "NONE")
 call s:Highlight("TabLineSel", s:normal_fg, s:focused_bg, "NONE")
-call s:Highlight("TabLineFill", s:Adjust(s:border_fg, 1.0), s:border_bg, "NONE")
+call s:Highlight("TabLineFill", s:Adjust(s:border_fg, 0.6), s:border_bg, "NONE")
 
 call s:Highlight("Folded", s:Adjust(s:normal_bg, 3.0), s:Adjust(s:normal_bg, 1.0), "NONE")
 call s:Highlight("FoldColumn", s:Adjust(s:normal_bg, 3.0), s:Adjust(s:normal_bg, 1.0), "NONE")
