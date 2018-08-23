@@ -8,7 +8,7 @@
 
 function! myfuncs#EditColors()
     execute "e " . expand("~/.vim/bundle/vim-lucius/colors/lucius.vim")
-    execute "split " . expand("~/.vim/colors/nord2.vim")
+    execute "split " . expand("~/.vim/bundle/borealis/colors/borealis.vim")
     execute "so " . expand("$VIMRUNTIME/syntax/hitest.vim")
     execute "wincmd L"
     execute "help syntax"

@@ -42,7 +42,7 @@ if exists("+breakindent")
 endif
 
 " GUI/terminal and colors
-let g:airline_theme = "lucius"
+" let g:airline_theme = "borealis"
 if !has("gui_running")
     if has("termguicolors")
         set termguicolors
@@ -322,6 +322,7 @@ else
     call plug#begin('~/.vim/bundle')
 endif
 
+Plug 'https://github.com/arcticicestudio/nord-vim'
 Plug 'https://github.com/chaoren/vim-wordmotion'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/elzr/vim-json'
@@ -329,12 +330,13 @@ Plug 'https://github.com/hdima/python-syntax'
 Plug 'https://github.com/hynek/vim-python-pep8-indent'
 Plug 'https://github.com/jonathanfilip/vim-dbext'
 Plug 'https://github.com/jonathanfilip/vim-lucius'
-Plug 'https://github.com/jonathanfilip/vim-nord'
+Plug 'https://github.com/jonathanfilip/borealis'
+" Plug 'https://github.com/jonathanfilip/vim-nord'
 Plug 'https://github.com/othree/xml.vim'
 Plug 'https://github.com/tomtom/tcomment_vim'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/vim-airline/vim-airline'
-Plug 'https://github.com/vim-airline/vim-airline-themes'
+" Plug 'https://github.com/vim-airline/vim-airline-themes'
 Plug 'https://github.com/vim-pandoc/vim-pandoc'
 Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax'
 Plug 'https://github.com/will133/vim-dirdiff'
@@ -416,6 +418,11 @@ let g:dbext_default_prompt_for_parameters = 0
 let g:dbext_default_display_cmd_line = 1
 let g:dbext_default_SQLITE_bin = "sqlite3"
 let g:dbext_default_history_file = "$HOME/.dbext_sql_history.txt"
+
+
+" Git Gutter: {{{2 -----------------------------------------------------------
+
+let g:gitgutter_override_sign_column_highlight = 0
 
 
 " Myfuncs: {{{2 --------------------------------------------------------------
@@ -510,7 +517,7 @@ endif
 
 " Colorscheme: {{{1 ==========================================================
 
-colorscheme nord2
+colorscheme borealis
 " colorscheme lucius
 " LuciusLight
 
