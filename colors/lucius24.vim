@@ -31,6 +31,13 @@ function! s:Adjust(hex_code, factor)
     return 0x10000 * l:red + 0x100 * l:green + l:blue
 endfunction
 
+function! s:AdjustRGB(hex_code, rfactor, gfactor, bfactor)
+    let l:red = min([0xff, float2nr(round(a:hex_code % 0x1000000 / 0x10000 * (1 + a:rfactor)))])
+    let l:green = min([0xff, float2nr(round(a:hex_code % 0x10000 / 0x100 * (1 + a:gfactor)))])
+    let l:blue = min([0xff, float2nr(round(a:hex_code % 0x100 * (1 + a:bfactor)))])
+    return 0x10000 * l:red + 0x100 * l:green + l:blue
+endfunction
+
 
 let s:normal_fg         = 0x404040
 let s:normal_bg         = 0xeeeeee
