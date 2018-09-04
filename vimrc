@@ -42,7 +42,7 @@ if exists("+breakindent")
 endif
 
 " GUI/terminal and colors
-" let g:airline_theme = "borealis"
+" let g:airline_theme = "lucius"
 if !has("gui_running")
     if has("termguicolors")
         set termguicolors
@@ -329,7 +329,7 @@ Plug 'https://github.com/elzr/vim-json'
 " Plug 'https://github.com/hdima/python-syntax'
 Plug 'https://github.com/hynek/vim-python-pep8-indent'
 Plug 'https://github.com/jonathanfilip/vim-dbext'
-Plug 'https://github.com/jonathanfilip/vim-lucius'
+" Plug 'https://github.com/jonathanfilip/vim-lucius'
 Plug 'https://github.com/jonathanfilip/borealis'
 " Plug 'https://github.com/jonathanfilip/vim-nord'
 Plug 'https://github.com/othree/xml.vim'
@@ -517,9 +517,9 @@ endif
 
 " Colorscheme: {{{1 ==========================================================
 
-colorscheme borealis
+colorscheme lucius
 " colorscheme lucius
-" LuciusLight
+LuciusLight
 
 let g:nord_comment_brightness = 5
 
