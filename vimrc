@@ -88,6 +88,11 @@ elseif version >= 703
     set cryptmethod=blowfish
 endif
 
+if version >= 801 && has("patch-8.1-360")
+    set diffopt+=indent-heuristic
+    set diffopt+=algorithm:patience
+endif
+
 
 " UI Settings: {{{2 ----------------------------------------------------------
 
