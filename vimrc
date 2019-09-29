@@ -44,12 +44,12 @@ endif
 " GUI/terminal and colors
 " let g:airline_theme = "lucius"
 if !has("gui_running")
-    if has("termguicolors")
-        set termguicolors
-    endif
-    set t_Co=256
-    set term=xterm-256color
-    set ttymouse=xterm2
+    " if has("termguicolors")
+    "     set termguicolors
+    " endif
+    " set t_Co=256
+    " set term=xterm-256color
+    set ttymouse=sgr
 endif
 
 " Use system clipboard
@@ -65,7 +65,9 @@ endif
 
 " Grep
 if has('unix')
-    if executable('ag')
+    if executable('rg')
+        set grepprg=rg\ --vimgrep\ --no-heading] --smart-case
+    elseif executable('ag')
         set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
     elseif executable('ack')
         set grepprg=ack\ -s\ --with-filename\ --nocolor\ --nogroup\ --column
@@ -100,7 +102,7 @@ set cmdheight=1
 set colorcolumn=+1
 set cursorline
 set display+=lastline
-set fillchars=
+" set fillchars=
 set guioptions=egc
 set laststatus=2
 set listchars=tab:\|\ ,trail:.,extends:>,precedes:<,eol:$
@@ -402,7 +404,10 @@ let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 
 if has('unix')
-    if executable('ag')
+    if executable('rg')
+        let g:ctrlp_user_command = 'rg --files --color=never --glob ""'
+        let g:ctrlp_use_caching = 0
+    elseif executable('ag')
         let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
         if len(&wildignore > 0)
             let g:ctrlp_user_command = g:ctrlp_user_command . ' --ignore=' . &wildignore
@@ -449,7 +454,7 @@ let g:pandoc#modules#enabled = [
             \"completion",
             \]
 
-let g:pandoc#formatting#mode = "h"
+let g:pandoc#formatting#mode = "ha"
 let g:pandoc#formatting#textwidth = "79"
 
 let g:pandoc#keyboard#enabled_submodules = [
@@ -469,6 +474,8 @@ let g:pandoc#syntax#codeblocks#embeds#langs = [
             \"sql",
             \"xml",
             \]
+
+let g:pandoc#formatting#extra_equalprg = ""
 
 
 " Python: {{{2 ---------------------------------------------------------------
