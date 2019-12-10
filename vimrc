@@ -533,7 +533,7 @@ endif
 
 colorscheme lucius
 " colorscheme lucius
-LuciusLight
+LuciusWhite
 
 let g:nord_comment_brightness = 5
 
