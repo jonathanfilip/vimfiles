@@ -66,7 +66,7 @@ endif
 " Grep
 if has('unix')
     if executable('rg')
-        set grepprg=rg\ --vimgrep\ --no-heading] --smart-case
+        set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
     elseif executable('ag')
         set grepprg=ag\ --nogroup\ --nocolor\ --vimgrep
     elseif executable('ack')
@@ -405,7 +405,7 @@ let g:ctrlp_working_path_mode = 0
 
 if has('unix')
     if executable('rg')
-        let g:ctrlp_user_command = 'rg --files --color=never --glob ""'
+        let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
         let g:ctrlp_use_caching = 0
     elseif executable('ag')
         let g:ctrlp_user_command = 'ag %s -l --nocolor -g ""'
@@ -454,7 +454,7 @@ let g:pandoc#modules#enabled = [
             \"completion",
             \]
 
-let g:pandoc#formatting#mode = "ha"
+" let g:pandoc#formatting#mode = "ha"
 let g:pandoc#formatting#textwidth = "79"
 
 let g:pandoc#keyboard#enabled_submodules = [
@@ -496,6 +496,11 @@ augroup end
 let g:wordmotion_prefix='<leader>'
 
 
+" Polyglot: {{{2 -----------------------------------------------------------
+
+let g:python_pep8_indent_hang_closing = 0
+
+
 " Autocommands: {{{1 =========================================================
 
 " Only show cursor line in current buffer in normal mode
@@ -529,13 +534,13 @@ if !exists('g:loaded_matchit') && findfile('plugin/matchit.vim', &rtp) ==# ''
     runtime! macros/matchit.vim
 endif
 
+
 " Colorscheme: {{{1 ==========================================================
 
 colorscheme lucius
 " colorscheme lucius
 LuciusWhite
 
-let g:nord_comment_brightness = 5
 
 " Local Settings: {{{1 =======================================================
 

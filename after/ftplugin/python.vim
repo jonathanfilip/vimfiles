@@ -4,6 +4,9 @@ setlocal softtabstop=4
 setlocal tabstop=4
 setlocal textwidth=99
 setlocal formatoptions-=t
+if executable('black')
+    setlocal equalprg=black\ --quiet\ -
+endif
 
 setlocal keywordprg=pydoc
 setlocal makeprg=pylint\ -E\ -r\ n\ -f\ parseable\ %:p
