@@ -383,6 +383,11 @@ let g:ale_lint_on_enter = 1
 let g:ale_set_signs = 0
 let g:ale_python_flake8_options = "--ignore=E501"
 let g:ale_set_balloons = 0
+let g:ale_fixers = {
+            \ "python": ["black", "isort"]
+            \}
+let g:ale_python_black_options = "-l 100"
+let g:ale_python_isort_options = "-l 100"
 
 
 " Ctags: {{{2 ----------------------------------------------------------------
