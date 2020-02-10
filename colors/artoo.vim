@@ -72,10 +72,10 @@ let s:special_fg        = s:purple
 
 let s:comment_fg        = s:grey
 
-let s:border_bg         = s:Adjust(s:normal_bg, -0.4)
+let s:border_bg         = s:AdjustRGB(s:normal_bg, -0.4, -0.4, -0.4)
 let s:border_fg         = s:normal_bg
-let s:faded_border_bg   = s:Adjust(s:normal_bg, -0.2)
-let s:border_faded_fg   = s:Adjust(s:normal_bg, 0.6)
+let s:faded_border_bg   = s:Adjust(s:border_bg, 0.5)
+let s:border_faded_fg   = s:Adjust(s:border_bg, 0.5)
 let s:focused_bg        = s:selection_bg
 
 
@@ -120,12 +120,12 @@ call s:Highlight("Structure", s:type_fg, "NONE", "NONE")
 call s:Highlight("Typedef", s:type_fg, "NONE", "NONE")
 
 " Special Highlighting
-call s:Highlight("Special", s:purple, "NONE", "NONE")
-call s:Highlight("SpecialChar", s:purple, "NONE", "NONE")
-call s:Highlight("Tag", s:purple, "NONE", "NONE")
-call s:Highlight("Delimiter", s:purple, "NONE", "NONE")
-call s:Highlight("SpecialComment", s:purple, "NONE", "NONE")
-call s:Highlight("Debug", s:purple, "NONE", "NONE")
+call s:Highlight("Special", s:special_fg, "NONE", "NONE")
+call s:Highlight("SpecialChar", s:special_fg, "NONE", "NONE")
+call s:Highlight("Tag", s:special_fg, "NONE", "NONE")
+call s:Highlight("Delimiter", s:special_fg, "NONE", "NONE")
+call s:Highlight("SpecialComment", s:special_fg, "NONE", "NONE")
+call s:Highlight("Debug", s:special_fg, "NONE", "NONE")
 
 " Border Highlighting
 call s:Highlight("StatusLine", s:border_fg, s:border_bg, "NONE")
@@ -141,8 +141,8 @@ call s:Highlight("TabLineFill", s:border_faded_fg, s:border_bg, "NONE")
 call s:Highlight("ToolbarLine", s:border_fg, s:border_bg, "NONE")
 call s:Highlight("ToolbarButton", s:normal_fg, s:focused_bg, "NONE")
 
-call s:Highlight("Folded", s:Adjust(s:normal_fg, 0.3), s:Adjust(s:normal_bg, -0.2), "NONE")
-call s:Highlight("FoldColumn", s:Adjust(s:normal_fg, 0.3), s:Adjust(s:normal_bg, -0.2), "NONE")
+call s:Highlight("Folded", s:Adjust(s:normal_fg, 0.3), s:Adjust(s:faded_border_bg, -0.2), "NONE")
+call s:Highlight("FoldColumn", s:Adjust(s:normal_fg, 0.3), s:Adjust(s:faded_border_bg, -0.2), "NONE")
 
 call s:Highlight("LineNr", s:Adjust(s:normal_bg, -0.4), s:faded_border_bg, "NONE")
 call s:Highlight("CursorLineNr", s:Adjust(s:normal_bg, -0.6), s:faded_border_bg, "NONE")
