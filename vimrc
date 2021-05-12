@@ -7,9 +7,13 @@
 set encoding=utf-8
 
 " Set location so we can set variables accordingly
-let g:os = "linux"
+let g:os = ""
 if has("win32") || has("win64")
     let g:os="win"
+elseif has("win32unix")
+    let g:os = "cygwin"
+elseif has("unix")
+    let g:os = "linux"
 endif
 
 
@@ -44,11 +48,12 @@ endif
 " GUI/terminal and colors
 " let g:airline_theme = "lucius"
 if !has("gui_running")
-    " if has("termguicolors")
-    "     set termguicolors
-    " endif
-    " set t_Co=256
-    " set term=xterm-256color
+    if &term == "screen-256color"
+        set term=xterm-256color
+    endif
+    if has("termguicolors") && $COLORTERM ==? "truecolor"
+        set termguicolors
+    endif
     set ttymouse=sgr
 endif
 
@@ -64,7 +69,7 @@ else
 endif
 
 " Grep
-if has('unix')
+if g:os == "linux"
     if executable('rg')
         set grepprg=rg\ --vimgrep\ --no-heading\ --smart-case
     elseif executable('ag')
@@ -124,10 +129,10 @@ if has("gui_running")
     else
         set lines=60 columns=160
     endif
-    if has("gui_win32") || has ("gui_win64")
-        set guifont=Consolas:h10
+    if g:os == "win"
+        set guifont=Cascadia_Mono_PL:h9
     elseif has("gui_macvim")
-        set guifont=Consolas:h13
+        set guifont=Cascadia_Mono_PL:h10
         set antialias
     endif
 else
@@ -320,36 +325,35 @@ command! W w
 command! Wq wq
 command! WQ wq
 
+" Insert date
+command! Date put! =strftime('%Y-%m-%d')
+
 
 " Plugins: {{{1 ==============================================================
 
-if has("win32") || has("win64")
+if g:os == "win"
     call plug#begin('~/vimfiles/bundle')
 else
     call plug#begin('~/.vim/bundle')
 endif
 
-Plug 'https://github.com/arcticicestudio/nord-vim'
+" Plug 'https://github.com/arcticicestudio/nord-vim'
+Plug 'https://github.com/gruvbox-community/gruvbox'
 Plug 'https://github.com/chaoren/vim-wordmotion'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
-" Plug 'https://github.com/elzr/vim-json'
-" Plug 'https://github.com/hdima/python-syntax'
-" Plug 'https://github.com/hynek/vim-python-pep8-indent'
-" Plug 'https://github.com/morhetz/gruvbox'
-Plug 'https://github.com/jonathanfilip/vim-dbext'
-" Plug 'https://github.com/jonathanfilip/vim-lucius'
-Plug 'https://github.com/jonathanfilip/borealis'
-" Plug 'https://github.com/jonathanfilip/vim-nord'
 Plug 'https://github.com/othree/xml.vim'
 Plug 'https://github.com/tomtom/tcomment_vim'
-Plug 'https://github.com/sheerun/vim-polyglot'
 Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/vim-airline/vim-airline'
-" Plug 'https://github.com/vim-airline/vim-airline-themes'
-Plug 'https://github.com/vim-pandoc/vim-pandoc'
-Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax'
 Plug 'https://github.com/will133/vim-dirdiff'
-Plug 'https://github.com/w0rp/ale'
+
+if g:os != "win"
+    Plug 'https://github.com/sheerun/vim-polyglot'
+    Plug 'https://github.com/w0rp/ale'
+    Plug 'https://github.com/preservim/tagbar'
+    Plug 'https://github.com/vim-pandoc/vim-pandoc'
+    Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax'
+endif
 
 if v:version > 704 || v:version == 704 && has("patch1826")
     Plug 'airblade/vim-gitgutter'
@@ -361,17 +365,24 @@ call plug#end()
 
 " Airline: {{{2 --------------------------------------------------------------
 
-let g:airline_left_sep = ''
-let g:airline_right_sep = ''
-let g:airline_inactive_collapse = 1
-let g:airline_powerline_fonts = 0
-let g:airline_symbols_ascii = 1
+" let g:airline_left_sep = ''
+" let g:airline_right_sep = ''
+" let g:airline_inactive_collapse = 1
+let g:airline_powerline_fonts = 1
+" let g:airline_symbols_ascii = 1
 
-let g:airline_extensions = ['ctrlp']
-let g:airline#extensions#default#layout = [
-            \ [ 'a', 'c' ],
-            \ [ 'x', 'y', 'z', 'error', 'warning' ]
-            \ ]
+" let g:airline_extensions = ['ctrlp']
+" let g:airline#extensions#default#layout = [
+"             \ [ 'a', 'c' ],
+"             \ [ 'x', 'y', 'z', 'error', 'warning' ]
+"             \ ]
+
+let g:airline#extensions#wordcount#enabled = 0
+let g:airline#extensions#whitespace#enabled = 0
+
+if g:os != "linux"
+    let g:airline_extensions = []
+endif
 
 
 " ALE: {{{2 ------------------------------------------------------------------
@@ -408,7 +419,7 @@ let g:ctrlp_show_hidden = 0
 let g:ctrlp_switch_buffer = 0
 let g:ctrlp_working_path_mode = 0
 
-if has('unix')
+if g:os == "linux"
     if executable('rg')
         let g:ctrlp_user_command = 'rg %s --files --color=never --glob ""'
         let g:ctrlp_use_caching = 0
@@ -420,6 +431,10 @@ if has('unix')
 
         let g:ctrlp_use_caching = 0
     endif
+elseif g:os == "win"
+    let g:ctrlp_use_caching = 1
+    let g:ctrlp_clear_cache_on_exit = 0
+
 endif
 
 
@@ -531,6 +546,14 @@ augroup xaml
     autocmd BufRead *.xaml setfiletype xml
 augroup end
 
+augroup cpp
+    autocmd!
+    autocmd BufNewFile *.C setfiletype cpp
+    autocmd BufRead *.C setfiletype cpp
+    autocmd BufNewFile *.H setfiletype cpp
+    autocmd BufRead *.H setfiletype cpp
+augroup end
+
 
 " Miscellaneous: {{{1 ========================================================
 
@@ -542,9 +565,36 @@ endif
 
 " Colorscheme: {{{1 ==========================================================
 
-colorscheme lucius
 " colorscheme lucius
-LuciusWhite
+" colorscheme lucius
+
+if $TERM_PROGRAM ==? "Apple_Terminal"
+    let s:mode = system("defaults read -g AppleInterfaceStyle")
+    if s:mode =~ '^Dark'
+        set background=dark
+    else
+        set background=light
+    endif
+    colorscheme gruvbox
+else
+    colorscheme gruvbox
+endif
+
+
+
+
+"     let s:mode = systemlist("defaults read -g AppleInterfaceStyle")[0]
+"     if s:mode ==? "dark"
+"         set background=dark
+"         colorscheme iceberg
+"     else
+"         set background=light
+"         colorscheme iceberg
+"     endif
+" else
+"     LuciusWhite
+" endif
+
 
 
 " Local Settings: {{{1 =======================================================
