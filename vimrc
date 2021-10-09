@@ -127,12 +127,12 @@ if has("gui_running")
     if g:os == "osx"
         set lines=80 columns=200 fuoptions=maxvert,maxhorz
     else
-        set lines=60 columns=160
+        set lines=60 columns=210
     endif
     if g:os == "win"
         set guifont=Cascadia_Mono_PL:h9
     elseif has("gui_macvim")
-        set guifont=Cascadia_Mono_PL:h10
+        set guifont=Cascadia_Mono_PL:h13
         set antialias
     endif
 else
@@ -183,7 +183,7 @@ set wildignore+=cscope.out,tags " vim
 " File Settings: {{{2 --------------------------------------------------------
 
 filetype plugin indent on
-set autoread
+set noautoread
 set fileformats=unix,dos
 set nobackup
 set nowritebackup
@@ -337,22 +337,24 @@ else
     call plug#begin('~/.vim/bundle')
 endif
 
-" Plug 'https://github.com/arcticicestudio/nord-vim'
-Plug 'https://github.com/gruvbox-community/gruvbox'
-Plug 'https://github.com/chaoren/vim-wordmotion'
 Plug 'https://github.com/ctrlpvim/ctrlp.vim'
 Plug 'https://github.com/othree/xml.vim'
 Plug 'https://github.com/tomtom/tcomment_vim'
-Plug 'https://github.com/tpope/vim-fugitive'
 Plug 'https://github.com/vim-airline/vim-airline'
-Plug 'https://github.com/will133/vim-dirdiff'
+Plug 'https://github.com/vim-pandoc/vim-pandoc'
+Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax'
+Plug 'https://github.com/tpope/vim-fugitive'
+Plug 'https://github.com/chaoren/vim-wordmotion'
+
+
+Plug 'https://github.com/sheerun/vim-polyglot'
+Plug 'https://github.com/w0rp/ale'
+
+Plug 'https://github.com/gruvbox-community/gruvbox'
 
 if g:os != "win"
-    Plug 'https://github.com/sheerun/vim-polyglot'
-    Plug 'https://github.com/w0rp/ale'
+    Plug 'https://github.com/will133/vim-dirdiff'
     Plug 'https://github.com/preservim/tagbar'
-    Plug 'https://github.com/vim-pandoc/vim-pandoc'
-    Plug 'https://github.com/vim-pandoc/vim-pandoc-syntax'
 endif
 
 if v:version > 704 || v:version == 704 && has("patch1826")
@@ -389,6 +391,7 @@ endif
 
 let g:ale_linters = {
             \ "python": ["flake8"],
+            \ "cpp": [],
             \ }
 let g:ale_lint_on_enter = 1
 let g:ale_set_signs = 0
@@ -484,7 +487,7 @@ let g:pandoc#keyboard#enabled_submodules = [
             \"sections",
             \"links"]
 
-let g:pandoc#spell#enabled = 0
+let g:pandoc#spell#enabled = 1
 
 let g:pandoc#syntax#codeblocks#embeds#langs = [
             \"python",
@@ -496,6 +499,12 @@ let g:pandoc#syntax#codeblocks#embeds#langs = [
             \]
 
 let g:pandoc#formatting#extra_equalprg = ""
+
+augroup pandoc
+    autocmd!
+    autocmd BufEnter *.md :syntax spell toplevel
+    autocmd BufEnter *.md :set spell
+augroup end
 
 
 " Python: {{{2 ---------------------------------------------------------------
@@ -548,6 +557,8 @@ augroup end
 
 augroup cpp
     autocmd!
+    autocmd BufNewFile *.c setfiletype cpp
+    autocmd BufRead *.c setfiletype cpp
     autocmd BufNewFile *.C setfiletype cpp
     autocmd BufRead *.C setfiletype cpp
     autocmd BufNewFile *.H setfiletype cpp
@@ -568,19 +579,89 @@ endif
 " colorscheme lucius
 " colorscheme lucius
 
-if $TERM_PROGRAM ==? "Apple_Terminal"
-    let s:mode = system("defaults read -g AppleInterfaceStyle")
-    if s:mode =~ '^Dark'
-        set background=dark
-    else
-        set background=light
+let g:gruvbox_vert_split = "bg1"
+let g:gruvbox_contrast_dark = "medium"
+let g:gruvbox_italic = 0
+let g:gruvbox_bold = 0
+
+set background=dark
+colorscheme gruvbox
+
+hi! link Statement GruvboxBlue
+hi! link Conditional GruvboxBlue
+hi! link Repeat GruvboxBlue
+hi! link Exception GruvboxBlue
+hi! link Keyword GruvboxBlue
+hi! link pythonOperator GruvboxBlue
+hi! link pythonException GruvboxBlue
+hi! link pythonConditional GruvboxBlue
+hi! link pythonRepeat GruvboxBlue
+
+
+" if $TERM_PROGRAM ==? "Apple_Terminal"
+"     let s:mode = system("defaults read -g AppleInterfaceStyle")
+"     if s:mode =~ '^Dark'
+"         set background=dark
+"     else
+"         set background=light
+"     endif
+"     colorscheme gruvbox
+" else
+"     colorscheme gruvbox
+" endif
+
+function! HighlightCS(group, fg, bg, opt)
+    let l:str_fg = a:fg
+    if type(a:fg) == v:t_number
+        let l:str_fg = "#" . printf("%06x", a:fg)
     endif
-    colorscheme gruvbox
-else
-    colorscheme gruvbox
-endif
+    let l:str_bg = a:bg
+    if type(a:bg) == v:t_number
+        let l:str_bg = "#" . printf("%06x", a:bg)
+    endif
+    let l:cmd = "hi " . a:group . " guifg=" . l:str_fg . " guibg=" . l:str_bg
+    if a:opt != ""
+        let l:cmd = l:cmd . " gui=" . a:opt . " cterm=" . a:opt
+    endif
+    exec l:cmd
+endfunction
 
+function! AdjustCS(hex_code, factor)
+    if a:hex_code == "NONE"
+        return a:hex_code
+    endif
+    let l:num = str2nr(strpart(a:hex_code, 1), 16)
+    let l:red = min([0xff, float2nr(round(l:num % 0x1000000 / 0x10000 * (1 + a:factor)))])
+    let l:green = min([0xff, float2nr(round(l:num % 0x10000 / 0x100 * (1 + a:factor)))])
+    let l:blue = min([0xff, float2nr(round(l:num % 0x100 * (1 + a:factor)))])
+    return 0x10000 * l:red + 0x100 * l:green + l:blue
+endfunction
 
+function! AdjustRGBCS(hex_code, rfactor, gfactor, bfactor)
+    let l:red = min([0xff, float2nr(round(a:hex_code % 0x1000000 / 0x10000 * (1 + a:rfactor)))])
+    let l:green = min([0xff, float2nr(round(a:hex_code % 0x10000 / 0x100 * (1 + a:gfactor)))])
+    let l:blue = min([0xff, float2nr(round(a:hex_code % 0x100 * (1 + a:bfactor)))])
+    return 0x10000 * l:red + 0x100 * l:green + l:blue
+endfunction
+
+function! GetFG(name)
+    exec "let l:gfg = synIDattr(synIDtrans(hlID('" . a:name .
+                \ "')), 'fg', 'gui')"
+    let l:gfg = l:gfg == "" ? "NONE" : l:gfg
+    return l:gfg
+endfunction
+
+function! GetBG(name)
+    exec "let l:gfg = synIDattr(synIDtrans(hlID('" . a:name .
+                \ "')), 'bg', 'gui')"
+    let l:gbg = l:gbg == "" ? "NONE" : l:gbg
+    return l:gbg
+endfunction
+
+call HighlightCS("DiffAdd", "NONE", AdjustCS(GetFG("GruvboxAqua"), -0.70), "none")
+call HighlightCS("DiffDelete", AdjustCS(GetFG("DiffDelete"), -0.55), AdjustCS(GetFG("DiffDelete"), -0.65), "none")
+call HighlightCS("DiffChange", "NONE", AdjustCS(GetFG("GruvboxYellow"), -0.70), "none")
+call HighlightCS("DiffText", "NONE", AdjustCS(GetFG("GruvboxOrange"), -0.50), "none")
 
 
 "     let s:mode = systemlist("defaults read -g AppleInterfaceStyle")[0]
